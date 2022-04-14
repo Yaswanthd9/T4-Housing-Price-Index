@@ -1,5 +1,15 @@
+
 #%%[markdown]
-#
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+#%%
+
+df= pd.read_csv('DC_Cleaned_Housing.csv')
+df.head()
+
+#%%
 # metrostations = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )  # (long,lat)
 list = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )
 
@@ -8,9 +18,9 @@ def findClosestMetroDist( row, metrostations ) :
   @row : a row of data in our dataframe
   return : distance (in meters) between the location and the nearest metro
   ''' 
-  homepoint = ( row['x'] , row['y'] )
+  homepoint = ( row['X'] , row['Y'] )
   
-  result = [ findDistBtw2Pts( metrostation , homepoint) for metrostation in metrostations ].min()
+  result = [ findDistBtw2Pts( metrostation , homepoint) for metrostation in metrostations ]
   
   # for metrostation in metrostations:
   #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
@@ -51,7 +61,8 @@ def findDistBtw2Pts( point1 ,point2 ):
 # lon1 = -1.7297222222222221
 # lon2 =  -1.6997222222222223
 # print(distance(lat1, lat2, lon1, lon2), "K.M")
-
-# findClosestMetroDist( df[0], list )
-
+#%%
+findClosestMetroDist( df[0], list )
+#%%
 # df.apply(findClosestMetroDist)
+# %%
