@@ -22,6 +22,7 @@ def findClosestMetroDist( row, metrostations ) :
   
   result = [ findDistBtw2Pts( metrostation , homepoint) for metrostation in metrostations ]
   
+  result = min(result)
   # for metrostation in metrostations:
   #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
   return result
@@ -49,7 +50,7 @@ def findDistBtw2Pts( point1 ,point2 ):
   c = 2 * asin(sqrt(a))
   
   # Radius of earth in kilometers. Use 3956 for miles
-  r = 6371
+  r = 3956
     
   # calculate the result
   return(c * r)
@@ -62,7 +63,14 @@ def findDistBtw2Pts( point1 ,point2 ):
 # lon2 =  -1.6997222222222223
 # print(distance(lat1, lat2, lon1, lon2), "K.M")
 #%%
-findClosestMetroDist( df[0], list )
+findClosestMetroDist( df.loc[1], list )
 #%%
 # df.apply(findClosestMetroDist)
+# %%
+
+#%%
+df2 = [findClosestMetroDist(df.loc[i], list) for i in range(1,12399)]
+# %%
+df2
+
 # %%
