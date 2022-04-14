@@ -32,22 +32,21 @@ dc_new_2017.to_csv('DC_Cleaned_Housing.csv')
 
 
 
+#####################
+#%%
+metro = pd.read_csv('Metro_Stations_Regional.csv')
+metro.head()
+metro_new = metro.drop(['WEB_URL', 'TRAININFO_URL','SE_ANNO_CAD_DATA', 'OBJECTID', 'CREATED', 'EDITOR','EDITED', 'CREATOR' ], axis=1)
+
+metro_new.head()
+
+metro_new.to_csv('Metro_Cleaned.csv')
 
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
+#%%
 
 
 
