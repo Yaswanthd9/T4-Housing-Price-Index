@@ -47,13 +47,39 @@ metro_new.to_csv('Metro_Cleaned.csv')
 
 
 #%%
+print(metro_new)
+#%%
 
+df_new = metro_new.iloc[:, [0,1,]]
+df_new.head()
 
+#%%
 
+df_new
+metro_new['lat_long'] = metro_new[['X', 'Y']].apply(tuple, axis=1)
+metro = metro_new['lat_long']
 
+print(metro_new['lat_long'])
 
+#%%
+list2 = [ ( '' , '') for row in metro_new['lat_long'] ]
 
+print(list2)
 
+#%%
+
+tuple1 = tuple(zip(metro, metro))
+#%%
+print(tuple)
+#%%
+tuple2 = tuple(zip(metro.items()))
+#%%
+metro.items() or metro.iteritems()
+#%%
+tuple = tuple(zip(metro.items()))
+tuple = tuple(zip(metro.items()))
+tuple = tuple(zip(metro.items()))
+print(tuple)
 
 
 
