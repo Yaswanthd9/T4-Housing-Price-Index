@@ -71,6 +71,7 @@ findClosestMetroDist( df.loc[1], list )
 #%%
 df2 = [findClosestMetroDist(df.loc[i], list) for i in range(1,12399)]
 # %%
+#this is a list still
 df2
 
 # %%
