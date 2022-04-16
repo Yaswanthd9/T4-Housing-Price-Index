@@ -8,17 +8,34 @@ import seaborn as sns
 
 df= pd.read_csv('DC_Cleaned_Housing.csv')
 df.head()
+#%%
+metro = pd.read_csv('Metro_Stations_Regional.csv')
+metro.head()
+metro_new = metro.drop(['WEB_URL', 'TRAININFO_URL','SE_ANNO_CAD_DATA', 'OBJECTID', 'CREATED', 'EDITOR','EDITED', 'CREATOR' ], axis=1)
+metro_new.head()
+#%%
+# metro_new.to_csv('Metro_Cleaned.csv')
+df_new = metro_new.iloc[:, [0,1,]]
+df_new.head()
+#%%
+print(df_new)
+#%%
+records= df_new.to_records(index=False)
+print(records)
+#%%
+
 
 #%%
 # metrostations = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )  # (long,lat)
-list = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )
-
+# list2 = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )
+list2 = records
+#%%
 def findClosestMetroDist( row, metrostations ) :
   '''
   @row : a row of data in our dataframe
   return : distance (in meters) between the location and the nearest metro
   ''' 
-  homepoint = ( row['X'] , row['Y'] )
+  homepoint = ( row['LONGITUDE'] , row['LATITUDE'] )
   
   result = [ findDistBtw2Pts( metrostation , homepoint) for metrostation in metrostations ]
   
@@ -63,15 +80,18 @@ def findDistBtw2Pts( point1 ,point2 ):
 # lon2 =  -1.6997222222222223
 # print(distance(lat1, lat2, lon1, lon2), "K.M")
 #%%
-findClosestMetroDist( df.loc[1], list )
+findClosestMetroDist( df.loc[1], list2 )
 #%%
 # df.apply(findClosestMetroDist)
 # %%
 
 #%%
-df2 = [findClosestMetroDist(df.loc[i], list) for i in range(1,12399)]
+df2 = [findClosestMetroDist(df.loc[i], list2) for i in range(1,12399)]
 # %%
 #this is a list still
 df2
-
+#%%
+df3 = pd.DataFrame(df2)
+print(df3)
+df3.describe()
 # %%

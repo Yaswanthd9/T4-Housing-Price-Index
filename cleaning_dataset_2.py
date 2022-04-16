@@ -52,6 +52,32 @@ print(metro_new)
 
 df_new = metro_new.iloc[:, [0,1,]]
 df_new.head()
+#%%
+ 
+# def toTuple( row, df_new ) :
+#       '''
+#   @row : a row of data in our dataframe
+#   return : distance (in meters) between the location and the nearest metro
+#   ''' 
+#   points = ( row['X'] , row['Y'] )
+
+#   result = ( (homepoint) for row in df_new )
+  
+#   return result
+
+
+
+#%%
+print(df_new)
+records= df_new.to_records(index=False)
+list1 = list(records)
+print(list1)
+
+
+
+
+
+
 
 #%%
 
@@ -59,10 +85,11 @@ df_new
 metro_new['lat_long'] = metro_new[['X', 'Y']].apply(tuple, axis=1)
 metro = metro_new['lat_long']
 
+#%%
 print(metro_new['lat_long'])
 
 #%%
-list2 = [ ( '' , '') for row in metro_new['lat_long'] ]
+list2 = [ (metro_new['lat_long'][1]) for i in metro_new['lat_long'] ]
 
 print(list2)
 
