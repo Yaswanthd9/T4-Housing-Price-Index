@@ -67,7 +67,10 @@ def findDistBtw2Pts( point1 ,point2 ):
 
   c = 2 * asin(sqrt(a))
   
-  # Radius of earth in kilometers. Use 3956 for miles
+  # Radius of earth in kilometers. 
+  # Use 3956 for miles
+  # Use 6378.1 for km
+  # Use 3958.8 for miles 
   r = 6378100
     
   # calculate the result
