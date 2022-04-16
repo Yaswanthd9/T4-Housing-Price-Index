@@ -1,5 +1,6 @@
 
 #%%[markdown]
+from mysqlx import Column
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -67,7 +68,7 @@ def findDistBtw2Pts( point1 ,point2 ):
   c = 2 * asin(sqrt(a))
   
   # Radius of earth in kilometers. Use 3956 for miles
-  r = 3956
+  r = 6378100
     
   # calculate the result
   return(c * r)
@@ -91,7 +92,21 @@ df2 = [findClosestMetroDist(df.loc[i], list2) for i in range(1,12399)]
 #this is a list still
 df2
 #%%
-df3 = pd.DataFrame(df2)
+column_names = ['distance']
+df3 = pd.DataFrame(df2, columns=column_names)
+# df3.rename(columns= {0:'distance'})
 print(df3)
 df3.describe()
 # %%
+plt.hist(x='distance', bins=50, data = df3)
+
+#%%
+df4 = df.copy()
+df4.describe()
+# %%
+df4['distance'] = df3
+df4.head()
+# %%
+print(df4)
+# %%
+
