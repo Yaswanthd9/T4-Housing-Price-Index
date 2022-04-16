@@ -109,4 +109,52 @@ df4.head()
 # %%
 print(df4)
 # %%
+df3.head()
 
+# n = df3
+# for i in n:
+#       2*sqrt((n^2/2))
+
+#%%
+# def distance (row, dataframe):
+#    homepoint = ( row['distance'])
+
+#%%
+def distance (hyp):
+      h= hyp
+      a= h**2
+      b=a/2
+      c=sqrt(b)
+      d=2*c
+      return d
+
+
+
+# %%
+def convert( row, frame ):
+  pt = ( row['distance'] )
+  
+  result = [ distance( pt) for i in frame ]
+  
+  
+  # for metrostation in metrostations:
+  #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
+  return result
+
+
+
+#%%
+convert( df3.loc[2], df3 )
+# %%
+df6 = [convert( df3.loc[i], df3 ) for i in range(1,12398)]
+# %%
+print(df6)
+# %%
+column_names = ['distance']
+df7 = pd.DataFrame(df6, columns=column_names)
+# df3.rename(columns= {0:'distance'})
+print(df7)
+df7.describe()
+# %%
+plt.hist(x='distance', bins=20, data = df7)
+# %%
