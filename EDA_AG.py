@@ -109,7 +109,7 @@ plt.show()
 
 # %%
 
-#PLOTS FOR Bathrooms
+#PLOTS FOR BATHROOMS
 # Overall observation: price increased as the number of bedrooms increased
 
 #Violin Plot 
@@ -138,10 +138,51 @@ plt.show()
 
 
 # %%
-#PLOTS FOR Bathrooms
-# Overall observation: price increased as the number of bedrooms increased
 
-FinalDC['AC'] = 
+#PLOTS FOR Half BATHROOMS
+# Overall observation: price increased as the number of half baths increased
+
+#Violin Plot 
+sns.violinplot(x="HF_BATHRM", y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.show()
+
+
+
+# Joint Plot
+sns.jointplot(x="HF_BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.show()
+
+
+#Regression Plot
+sns.regplot(x="HF_BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.show()
+
+
+# %%
+#PLOTS FOR STORIES
+
+FinalDC['STORIES'] = FinalDC['STORIES'].round()
+FinalDC['STORIES'] = FinalDC['STORIES'].dropna()
+print(FinalDC.STORIES)
+
+#Violin Plot 
+sns.violinplot(x="STORIES", y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Stories")
+plt.xlabel("Number of Stories")
+plt.ylabel("Price")
+plt.show()
+
+# %%
+#PLOTS FOR AC
 
 #Violin Plot 
 sns.violinplot(x="AC", y="PRICE", data= FinalDC, scale="width")
@@ -153,4 +194,22 @@ plt.show()
 
 # %%
 
+#PLOTS FOR Condition
 
+#Violin Plot 
+sns.violinplot(x="CNDTN", y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Condition")
+plt.xlabel("Condition of the home")
+plt.ylabel("Price")
+plt.show()
+
+
+#Violin Plot 
+sns.violinplot(x='LANDAREA', y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Condition")
+plt.xlabel("Condition of the home")
+plt.ylabel("Price")
+plt.show()
+
+
+# %%
