@@ -254,13 +254,18 @@ print( glmmodel1Fit.summary() )
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
 
-model1 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
 
 model1Fit = model1.fit()
 print( model1Fit.summary() )
 
 
+#Logging Price 
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
+model1 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model1Fit = model1.fit()
+print(model1Fit.summary())
 
 
 # %%
