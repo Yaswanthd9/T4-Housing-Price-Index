@@ -1,0 +1,64 @@
+\documentclass[12pt]{article}
+\newcommand\tab[1][.50cm]{\hspace*{#1}}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage[T1]{fontenc}
+\usepackage{times}
+\usepackage{pgfplots}
+\pgfplotsset{compat = newest}
+\usetikzlibrary{positioning, arrows.meta}
+\usepgfplotslibrary{fillbetween}
+\usepackage{lmodern}
+\usepackage{ragged2e}
+\usepackage{multicol, caption, booktabs}
+\usepackage[flushleft]{threeparttable}
+\usepackage[utf8]{inputenc}
+\usepackage{siunitx}
+\usepackage{setspace}
+\usepackage[export]{adjustbox}
+%\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[affil-it]{authblk} 
+\setlength{\columnsep}{1cm}
+\newcommand{\dd}[1]{\mathrm{d}#1}
+\usepackage[portrait, margin=1in]{geometry}
+\graphicspath{ {C:/Users/Stu Lucko/Documents/GitHub/22SP_6103_11T_iDM/} }
+\graphicspath{ {C:/Users/Stu Lucko/Documents/GitHub/Econometrics/} }
+\newenvironment{Figure}
+{\par\medskip\noindent\minipage{\linewidth}}
+{\endminipage\par\medskip}
+\usepackage{amssymb}
+\usetikzlibrary{calc} 
+%\onehalfspacing%
+\begin{document}
+
+
+%$$ d=2r\ arcsin \left(\sqrt{sin^{2} \left(\frac{\phi_{2}-\phi_{1}}25}\right)} \right)$$
+
+%$$\phi$$
+
+$$ d=2r\ arcsin \left(\sqrt{sin^{2} \left( \frac{\phi_{2}-\phi_{1}} {2} \right) +cos(\phi_1)cos(\phi_2)sin^2 \left( \frac{\lambda_{2}-\lambda_{1}} {2} \right)       } \right)$$\\\\
+\centering
+\footnotesize
+where $\phi_1$ and $\phi_2$ correspond to latitude 1 and latitude 2,\\ 
+ $\lambda_1$ and $\lambda_2$ corresond to longitude 1 and longitude 2, \\ 
+and $r$ is the radius of the Earth. \\ 
+\bigskip
+The latitude and longitude coordinates for each house and each metro station\\
+are substituded into the haversine fuction for $(\phi_1,\ \lambda_1) \ \& \  (\phi_2,\ \lambda_2)$ \\
+respectively. The distance from a single house to all 91 metro stations\\ are 
+calculated, then the minumum distance is selected and added to the dataframe.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
