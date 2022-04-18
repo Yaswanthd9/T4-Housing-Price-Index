@@ -25,6 +25,21 @@ def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
+
+def PRICE(PRICE): # colname can be 'rincome', 'income' etc
+  PRICE = row[colname]
+  if PRICE == 1: return np.nan
+  if PRICE > 1: return PRICE
+  else: return np.nan
+
+FinalDC.dropna(inplace=True)
+
+
+#Creating the new column
+FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+
+
+
 # display the dataframe
 print(FinalDC)
   
@@ -213,3 +228,14 @@ plt.show()
 
 
 # %%
+
+import statsmodels.api as sm 
+from statsmodels.formula.api import glm
+
+modelsurvivalLogit = glm(formula='PRICE ~ distance + STORIES + LANDAREA + CNDTN +   ', data=FinalDC, family=sm.families.Binomial())
+
+modelsurvivalLogitFit = modelsurvivalLogit.fit()
+print( modelsurvivalLogitFit.summary() )
+
+
+
