@@ -1,13 +1,19 @@
 #%%
+import mysqlx
+from mysqlx import Column
+import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
-df = pd.read_csv (r'/Users/Dell/Downloads/T4 Data Mining/INTDSRUSM193N.csv')
-print (df)
-# %%
+print('Done, continue.')
 
 #%%
-import pandas as pd
+FinalDC= pd.read_csv('FinalDC.csv')
+FinalDC.head()
 
-df = pd.read_csv (r'/Users/Dell/Downloads/T4 Data Mining/DC_PROPERTIES.csv')
-print (df)
+
+
+# %%
+
 # %%
