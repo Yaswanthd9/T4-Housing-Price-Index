@@ -14,13 +14,13 @@ FinalDC.head()
 
 # %%
 
+# Creating a dummy column for EDA 
 def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
   
   if distance <= 0.25: return 1
   if distance > 0.25 and distance <= 0.50: return 2
   if distance > 0.5: return 3
   else: return 'NA'
-
 
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
@@ -232,10 +232,35 @@ plt.show()
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
 
-modelsurvivalLogit = glm(formula='PRICE ~ distance + STORIES + LANDAREA + CNDTN +   ', data=FinalDC, family=sm.families.Binomial())
 
-modelsurvivalLogitFit = modelsurvivalLogit.fit()
-print( modelsurvivalLogitFit.summary() )
+#renaming columns 
+FinalDC['metro25'] = FinalDC['.25metro']
+FinalDC['metro50'] = FinalDC['.50metro']
+
+#GLM model with distance dummies 
+glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print( glmmodel1Fit.summary() )
+
+
+#GLM model with all the variables 
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print( glmmodel1Fit.summary() )
+
+
+#OLS to get the r-squared value 
+from statsmodels.formula.api import ols
+
+model1 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+
+model1Fit = model1.fit()
+print( model1Fit.summary() )
 
 
 
+
+
+# %%
