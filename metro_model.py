@@ -55,10 +55,10 @@ from math import radians, cos, sin, asin, sqrt
 def findDistBtw2Pts( point1 ,point2 ):
   # The math module contains a function named
   # radians which converts from degrees to radians.
-  lon1 = radians(point1[1])
-  lon2 = radians(point2[1])
-  lat1 = radians(point1[0])
-  lat2 = radians(point1[0])
+  lon1 = radians(point1[0])
+  lon2 = radians(point2[0])
+  lat1 = radians(point1[1])
+  lat2 = radians(point2[1])
     
   # Haversine formula
   dlon = lon2 - lon1
@@ -71,7 +71,8 @@ def findDistBtw2Pts( point1 ,point2 ):
   # Use 3956 for miles
   # Use 6378.1 for km
   # Use 3958.8 for miles 
-  r = 6378100
+  # Use 6378100 for meters
+  r = 3956
     
   # calculate the result
   return(c * r)
@@ -84,16 +85,17 @@ def findDistBtw2Pts( point1 ,point2 ):
 # lon2 =  -1.6997222222222223
 # print(distance(lat1, lat2, lon1, lon2), "K.M")
 #%%
-findClosestMetroDist( df.loc[1], list2 )
+findClosestMetroDist( df.loc[0], list2 )
 #%%
 # df.apply(findClosestMetroDist)
 # %%
 
 #%%
-df2 = [findClosestMetroDist(df.loc[i], list2) for i in range(1,12399)]
+df2 = [findClosestMetroDist(df.loc[i], list2) for i in range(0,12399)]
 # %%
 #this is a list still
 df2
+
 #%%
 column_names = ['distance']
 df3 = pd.DataFrame(df2, columns=column_names)
@@ -107,7 +109,7 @@ plt.hist(x='distance', bins=50, data = df3)
 df4 = df.copy()
 df4.describe()
 # %%
-df4['distance'] = df3
+df4['distance', '.25metro', '.50metro'] = df3
 df4.head()
 # %%
 print(df4)
@@ -160,4 +162,51 @@ print(df7)
 df7.describe()
 # %%
 plt.hist(x='distance', bins=20, data = df7)
+# %%
+totalDCdf= df4.copy()
+totalDCdf.to_csv('FinalDCdf.csv')
+#%%
+
+df4['distance2'] = df7
+secondDCdf=df4.copy()
+secondDCdf.to_csv('newDistanceDC.csv')
+# %%
+
+
+#%%
+def dummy25(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if (thisdistance <= .25): return 1
+  if (thisdistance > .25): return 0
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+df3['.25metro'] = df3.apply(dummy25, colname='distance', axis=1)
+# %%
+df3.head()
+
+# %%
+def dummy50(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if (thisdistance <= .5): return 1
+  if (thisdistance > .5): return 0
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+df3['.50metro'] = df3.apply(dummy25, colname='distance', axis=1)
+# %%
+df3
+#%%
+
+df4['distance'] = df3['distance']
+#%%
+df4['.25metro'] = df3['.25metro']
+#%%
+df4['.50metro'] = df3['.50metro']
+df4.head()
+# %%
+totalDCdf= df4.copy()
+totalDCdf.to_csv('FinalDC.csv')
 # %%
