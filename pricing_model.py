@@ -18,3 +18,20 @@ from sklearn.model_selection import train_test_split
 pricedf1= pd.read_csv('FinalDC.csv')
 # %%
 pricedf1.head()
+# %%
+print(pricedf1)
+#%%
+pricedf1['PRICE'].describe()
+#%%
+pricedf1['metro25']= pricedf1['.25metro']
+pricedf1['metro50']= pricedf1['.50metro']
+#%%
+formula1=('PRICE ~ metro25  + BEDRM + ROOMS + BATHRM + AC ')
+#%%
+modelTitanicAllLogitFit= ols(formula=formula1, data=pricedf1).fit()
+modelTitanicAllLogitFit.summary()
+print( type(modelTitanicAllLogitFit) )
+print( modelTitanicAllLogitFit.summary() )
+# %%
+
++ AC + NUM_UNITS + LANDAREA
