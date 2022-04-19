@@ -9,7 +9,7 @@ import seaborn as sns
 print('Done, continue.')
 
 #%%
-FinalDC = pd.read_csv('FinalDC.csv')
+FinalDC = pd.read_csv('/Users/Arundhati/Documents/T4-Housing-Price-Index/FinalDC.csv')
 FinalDC.head()
 
 # %%
@@ -64,7 +64,7 @@ sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg',
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
-plt.savefig('DistanceJoint.png')
+plt.savefig('DistanceJoint2.png')
 plt.show()
 
 #%%
@@ -73,7 +73,7 @@ sns.regplot(x="distance", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
-plt.savefig('DistanceRegplot.png')
+
 plt.show()
 
 
@@ -97,7 +97,7 @@ sns.violinplot(x="BEDRM", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
-plt.savefig('BedViolin.png')
+
 plt.show()
 
 #%%
