@@ -1,0 +1,18 @@
+
+#%%
+import numpy as np
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+import csv
+
+print('Done.')
+
+df = pd.read_csv('C:\Users\Arundhati\Document\T4-Housing-Price-Index\DC_Properties.csv')
+print (df)
+print('Done.')
+
+# %%
+
+
+
