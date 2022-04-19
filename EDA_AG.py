@@ -9,7 +9,7 @@ import seaborn as sns
 print('Done, continue.')
 
 #%%
-FinalDC = pd.read_csv('FinalDC.csv')
+FinalDC = pd.read_csv('/Users/Arundhati/Documents/T4-Housing-Price-Index/FinalDC.csv')
 FinalDC.head()
 
 # %%
@@ -218,19 +218,24 @@ plt.xlabel("Condition of the home")
 plt.ylabel("Price")
 plt.show()
 
+#%%
 
-#Violin Plot 
-sns.violinplot(x='LANDAREA', y="PRICE", data= FinalDC, scale="width")
-plt.title("Price vs Condition")
-plt.xlabel("Condition of the home")
-plt.ylabel("Price")
-plt.show()
+# Plot for Land area
+# #Violin Plot 
+# sns.violinplot(x='LANDAREA', y="PRICE", data= FinalDC, scale="width")
+# plt.title("Price vs Condition")
+# plt.xlabel("Condition of the home")
+# plt.ylabel("Price")
+# plt.show()
 
 
 # %%
 
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
+import stargazer
+# from stargazer.stargazer import Stargazer
+# from IPython.core.display import HTML
 
 
 #renaming columns 
@@ -241,11 +246,14 @@ FinalDC['metro50'] = FinalDC['.50metro']
 glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
 
 glmmodel1Fit = glmmodel1.fit()
-print( glmmodel1Fit.summary() )
+print(glmmodel1Fit.summary())
+
+# stargazer = Stargazer([glmmodel1Fit])
+# HTML(stargazer.render_html())
 
 
 #GLM model with all the variables 
-glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC, family=sm.families.Binomial())
 
 glmmodel1Fit = glmmodel1.fit()
 print( glmmodel1Fit.summary() )
@@ -254,7 +262,7 @@ print( glmmodel1Fit.summary() )
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
 
-model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model3 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 
 model1Fit = model1.fit()
 print( model1Fit.summary() )
@@ -263,10 +271,9 @@ print( model1Fit.summary() )
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
-model1 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
-model1Fit = model1.fit()
-print(model1Fit.summary())
-
+model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+model4Fit = model4.fit()
+print(model4Fit.summary())
 
 # %%
 
