@@ -9,7 +9,7 @@ import seaborn as sns
 print('Done, continue.')
 
 #%%
-FinalDC = pd.read_csv('/Users/Arundhati/Documents/T4-Housing-Price-Index/FinalDC.csv')
+FinalDC = pd.read_csv('FinalDC.csv')
 FinalDC.head()
 
 # %%
@@ -63,6 +63,7 @@ sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg',
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
+plt.savefig('DistanceJoint.png')
 plt.show()
 
 
@@ -71,6 +72,7 @@ sns.regplot(x="distance", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
+plt.savefig('DistanceRegplot.png')
 plt.show()
 
 
@@ -94,6 +96,7 @@ sns.violinplot(x="BEDRM", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
+plt.savefig('BedViolin.png')
 plt.show()
 
 
@@ -103,6 +106,7 @@ sns.jointplot(x="BEDRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', li
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
+plt.savefig('BedJoint.png')
 plt.show()
 
 
@@ -111,12 +115,15 @@ sns.regplot(x="BEDRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, l
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
+plt.savefig('BedRegplot.png')
 plt.show()
 
 
 #Scatter Plots
 sns.scatterplot(x="BEDRM", y="PRICE", data=FinalDC)
+plt.savefig('BedroomScatter.png')
 plt.show()
+
 
 sns.scatterplot(x="BEDRM", y="PRICE", data=FinalDC)
 plt.show()
@@ -132,6 +139,7 @@ sns.violinplot(x="BATHRM", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('BathViolin.png')
 plt.show()
 
 
@@ -141,6 +149,7 @@ sns.jointplot(x="BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', l
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('BathJoint.png')
 plt.show()
 
 
@@ -149,6 +158,7 @@ sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, 
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('BathRegplot.png')
 plt.show()
 
 
@@ -156,29 +166,32 @@ plt.show()
 
 #PLOTS FOR Half BATHROOMS
 # Overall observation: price increased as the number of half baths increased
-
+#%%
 #Violin Plot 
 sns.violinplot(x="HF_BATHRM", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('halfViolin.png')
 plt.show()
 
 
-
+#%%
 # Joint Plot
 sns.jointplot(x="HF_BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('hfJoint.png')
 plt.show()
 
-
+#%%
 #Regression Plot
 sns.regplot(x="HF_BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('RoomRegplot.png')
 plt.show()
 
 
@@ -188,12 +201,13 @@ plt.show()
 FinalDC['STORIES'] = FinalDC['STORIES'].round()
 FinalDC['STORIES'] = FinalDC['STORIES'].dropna()
 print(FinalDC.STORIES)
-
+#%%
 #Violin Plot 
 sns.violinplot(x="STORIES", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Stories")
 plt.xlabel("Number of Stories")
 plt.ylabel("Price")
+plt.savefig('StoriesViolin.png')
 plt.show()
 
 # %%
@@ -204,6 +218,7 @@ sns.violinplot(x="AC", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('BathViolin.png')
 plt.show()
 
 
@@ -216,6 +231,7 @@ sns.violinplot(x="CNDTN", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Condition")
 plt.xlabel("Condition of the home")
 plt.ylabel("Price")
+plt.savefig('ConditionViolin.png')
 plt.show()
 
 #%%
@@ -237,11 +253,11 @@ import stargazer
 # from stargazer.stargazer import Stargazer
 # from IPython.core.display import HTML
 
-
+#%%
 #renaming columns 
 FinalDC['metro25'] = FinalDC['.25metro']
 FinalDC['metro50'] = FinalDC['.50metro']
-
+#%%
 #GLM model with distance dummies 
 glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
 
@@ -255,7 +271,7 @@ print(glmmodel1Fit.summary())
 #GLM model with all the variables 
 glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC, family=sm.families.Binomial())
 
-glmmodel1Fit = glmmodel1.fit()
+glmmodel1Fit = glmmodel2.fit()
 print( glmmodel1Fit.summary() )
 
 
@@ -264,8 +280,8 @@ from statsmodels.formula.api import ols
 
 model3 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 
-model1Fit = model1.fit()
-print( model1Fit.summary() )
+model3Fit = model3.fit()
+print( model3Fit.summary() )
 
 
 #Logging Price 
@@ -283,16 +299,19 @@ sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, 
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
+plt.savefig('BathRegplot.png')
 plt.show()
 # %%
 sns.regplot(x="ROOMS", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Rooms")
 plt.ylabel("Price")
+plt.savefig('RoomRegplot.png')
 plt.show()
 #%%
 #%%
 sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
+plt.savefig('priceVsDistance.png')
 plt.show()
 #%%
 def stories(row, colname): # colname can be 'rincome', 'income' etc
@@ -309,25 +328,28 @@ sns.regplot(x="STORIES", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Stories")
 plt.ylabel("Price")
+plt.savefig('priceVsstories.png')
 plt.show()
 # %%
 sns.regplot(x="metro25", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=0,line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Categorical: 1 is Near Metro")
 plt.ylabel("Price")
+plt.savefig('priceVsMetro50.png')
 plt.show()
 # %%
 sns.regplot(x="metro50", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Categorical: 1 is Near Metro")
 plt.ylabel("Price")
+plt.savefig('priceVsMetro25.png')
 plt.show()
 # %%
 sns.regplot(x="LANDAREA", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Amount of Land Area")
 plt.ylabel("Price")
-plt.savefig('priceVsLand')
+plt.savefig('priceVsLand.png')
 plt.show()
 
 # %%
