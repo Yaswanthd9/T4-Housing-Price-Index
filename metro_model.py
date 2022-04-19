@@ -189,7 +189,7 @@ df3.head()
 # %%
 def dummy50(row, colname): # colname can be 'rincome', 'income' etc
   thisdistance = row[colname]
-  if (thisdistance <= .5): return 1
+  if ( 0.25 < thisdistance <=0.5 ): return 1
   if (thisdistance > .5): return 0
   return np.nan
 # end function cleanDfIncome
