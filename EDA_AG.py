@@ -17,26 +17,26 @@ FinalDC.head()
 # Creating a dummy column for EDA 
 def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
   
-  if distance <= 0.25: return 1
-  if distance > 0.25 and distance <= 0.50: return 2
-  if distance > 0.5: return 3
+  if distance <= 0.50: return 1
+  if distance > 0.50 and distance <= 1: return 2
+  if distance > 1: return 3
   else: return 'NA'
 
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
 #%%
-def PRICE(PRICE): # colname can be 'rincome', 'income' etc
-  PRICE = row[colname]
-  if PRICE == 1: return np.nan
-  if PRICE > 1: return PRICE
-  else: return np.nan
+# def PRICE(row, colname): # colname can be 'rincome', 'income' etc
+#   thisprice = row[colname]
+#   if thisprice == 1: return np.nan
+#   if thisprice > 1: return thisprice
+#   else: return np.nan
 
-FinalDC.dropna(inplace=True)
+# FinalDC.dropna(inplace=True)
 
 
-#Creating the new column
-FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+# #Creating the new column
+# FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
 
 #%%
@@ -64,8 +64,12 @@ sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg',
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
+x= ['0.5', '1', 'Greater than 1']
+default_x_ticks = range(len(x))
+plt.xticks(default_x_ticks, x)
 plt.savefig('DistanceJoint.png')
 plt.show()
+
 
 #%%
 #Regression Plot
@@ -250,7 +254,7 @@ plt.show()
 
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
-import stargazer
+# import stargazer
 # from stargazer.stargazer import Stargazer
 # from IPython.core.display import HTML
 
@@ -260,35 +264,35 @@ FinalDC['metro25'] = FinalDC['.25metro']
 FinalDC['metro50'] = FinalDC['.50metro']
 #%%
 #GLM model with distance dummies 
-glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
+glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC, family=sm.families.Binomial())
 
 glmmodel1Fit = glmmodel1.fit()
 print(glmmodel1Fit.summary())
-
+#%%
 # stargazer = Stargazer([glmmodel1Fit])
 # HTML(stargazer.render_html())
 
-
+#%%
 #GLM model with all the variables 
-glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC, family=sm.families.Binomial())
+glmmodel2 = glm(formula='PRICE ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 
-glmmodel1Fit = glmmodel2.fit()
-print( glmmodel1Fit.summary() )
+glmmodel2Fit = glmmodel2.fit()
+print( glmmodel2Fit.summary() )
 
-
+#%%
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
-
-model3 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+#%%
+model3 = ols(formula='PRICE ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 
 model3Fit = model3.fit()
 print( model3Fit.summary() )
 
-
+#%%
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
-
-model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+#%%
+model4 = ols(formula='log_price ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 model4Fit = model4.fit()
 print(model4Fit.summary())
 
