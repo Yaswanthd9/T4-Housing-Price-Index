@@ -17,15 +17,40 @@ FinalDC.head()
 # Creating a dummy column for EDA 
 def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
   
-  if distance <= 0.50: return 1
-  if distance > 0.50 and distance <= 1: return 2
-  if distance > 1: return 3
+  if distance <= 0.25: return 1
+  if distance > 0.25 and distance <= 0.50: return 2
+  if distance > 0.5: return 3
   else: return 'NA'
 
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
 #%%
+def PRICE(PRICE): # colname can be 'rincome', 'income' etc
+  PRICE = row[colname]
+  if PRICE == 1: return np.nan
+  if PRICE > 1: return PRICE
+  else: return np.nan
+
+FinalDC.dropna(inplace=True)
+
+
+#Creating the new column
+FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+
+
+#Dropping 1 values in price
+def PRICE(PRICE): # colname can be 'rincome', 'income' etc
+  PRICE = row[colname]
+  if PRICE == 1: return np.nan
+  if PRICE > 1: return PRICE
+  else: return np.nan
+
+FinalDC.dropna(inplace=True)
+
+
+#Creating the new column
+FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 # def PRICE(row, colname): # colname can be 'rincome', 'income' etc
 #   thisprice = row[colname]
 #   if thisprice == 1: return np.nan
@@ -64,6 +89,9 @@ sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg',
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
+plt.savefig('DistanceJoint.png')
+plt.show()
+
 x= ['0.5', '1', 'Greater than 1']
 default_x_ticks = range(len(x))
 plt.xticks(default_x_ticks, x)
@@ -264,7 +292,30 @@ FinalDC['metro25'] = FinalDC['.25metro']
 FinalDC['metro50'] = FinalDC['.50metro']
 #%%
 #GLM model with distance dummies 
-glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC)
+glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print(glmmodel1Fit.summary())
+
+# stargazer = Stargazer([glmmodel1Fit])
+# HTML(stargazer.render_html())
+
+
+#GLM model with all the variables 
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print( glmmodel1Fit.summary() )
+
+
+#OLS to get the r-squared value 
+from statsmodels.formula.api import ols
+
+model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+
+model1Fit = model1.fit()
+print( model1Fit.summary() )
+glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC, family=sm.families.Binomial())
 
 glmmodel1Fit = glmmodel1.fit()
 print(glmmodel1Fit.summary())
@@ -293,6 +344,63 @@ print( model3Fit.summary() )
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
+model1 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model1Fit = model1.fit()
+print(model1Fit.summary())
+
+
+#Violin Plot 
+sns.violinplot(x="CNDTN", y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Condition")
+plt.xlabel("Condition of the home")
+plt.ylabel("Price")
+plt.show()
+
+
+#Violin Plot 
+sns.violinplot(x='LANDAREA', y="PRICE", data= FinalDC, scale="width")
+plt.title("Price vs Condition")
+plt.xlabel("Condition of the home")
+plt.ylabel("Price")
+plt.show()
+
+
+# %%
+modelsurvivalLogit = glm(formula='PRICE ~ distance + STORIES + LANDAREA + CNDTN +   ', data=FinalDC, family=sm.families.Binomial())
+
+#renaming columns 
+FinalDC['metro25'] = FinalDC['.25metro']
+FinalDC['metro50'] = FinalDC['.50metro']
+
+#GLM model with distance dummies 
+glmmodel1 = glm(formula='PRICE ~ metro25 + metro50', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print( glmmodel1Fit.summary() )
+
+
+#GLM model with all the variables 
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel2.fit()
+print( glmmodel1Fit.summary() )
+
+
+#OLS to get the r-squared value 
+from statsmodels.formula.api import ols
+
+model3 = ols(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+
+model3Fit = model3.fit()
+print( model3Fit.summary() )
+
+
+#Logging Price 
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+
+model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+model4Fit = model4.fit()
+print(model4Fit.summary())
 
 
 
