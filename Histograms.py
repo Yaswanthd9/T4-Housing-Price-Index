@@ -1,4 +1,5 @@
 #%%[markdown]
+from statistics import mean
 from mysqlx import Column
 import numpy as np
 import pandas as pd
@@ -124,7 +125,7 @@ from sklearn.tree import DecisionTreeClassifier # Import Decision Tree Classifie
 from sklearn.model_selection import train_test_split # Import train_test_split function
 from sklearn import metrics #Import scikit-learn metrics module for accuracy calculation
 
-feature_cols=['.25metro','.50metro','BEDRM','SQUARE','BATHRM','distance','SQUARE','ROOMS','STORIES']
+feature_cols=['.25metro','.50metro','BEDRM','BATHRM','distance','SQUARE','ROOMS','STORIES']
 X = pricedf1[feature_cols] # Features
 y = pricedf1.PRICE # Target variable
 
@@ -138,4 +139,31 @@ clf = clf.fit(X_train,y_train)
 #Predict the response for test dataset
 y_pred = clf.predict(X_test)
 print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+# %%
+#import pandas
+import pandas as pd
+
+pricedf1.dropna(inplace=True)
+feature_cols=['.25metro','.50metro','BEDRM','BATHRM','distance','SQUARE','ROOMS']
+X = pricedf1[feature_cols] # Features
+y = pricedf1.PRICE # Target variable
+#pricedf1.head()
+# %%
+from sklearn.model_selection import train_test_split
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=0)
+# %%
+from sklearn.linear_model import LogisticRegression
+
+# instantiate the model (using the default parameters)
+logreg = LogisticRegression()
+
+# fit the model with data
+logreg.fit(X_train,y_train)
+
+#
+y_pred=logreg.predict(X_test)
+print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
+#print("Precision:",metrics.precision_score(y_test, y_pred))
+#print("Recall:",metrics.recall_score(y_test, y_pred))
+
 # %%
