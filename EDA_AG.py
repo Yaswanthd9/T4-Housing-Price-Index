@@ -25,20 +25,19 @@ def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
-#%%
+
+#Dropping 1 values in price
 def PRICE(PRICE): # colname can be 'rincome', 'income' etc
-  PRICE = row[colname]
+  
   if PRICE == 1: return np.nan
   if PRICE > 1: return PRICE
   else: return np.nan
 
+#Dropping NAs
 FinalDC.dropna(inplace=True)
 
-
-#Creating the new column
-FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
-
-
+#Creating/Updating the new column
+FinalDC['PRICE'] = FinalDC['PRICE'].apply(PRICE)
 
 # display the dataframe
 print(FinalDC)
@@ -245,27 +244,27 @@ print( glmmodel1Fit.summary() )
 
 
 #GLM model with all the variables 
-glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATH + AC', data=FinalDC, family=sm.families.Binomial())
 
-glmmodel1Fit = glmmodel1.fit()
-print( glmmodel1Fit.summary() )
+glmmodel2Fit = glmmodel2.fit()
+print( glmmodel2Fit.summary() )
 
 
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
 
-model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model3 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
 
-model1Fit = model1.fit()
-print( model1Fit.summary() )
+model3Fit = model3.fit()
+print( model3Fit.summary() )
 
 
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
-model1 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
-model1Fit = model1.fit()
-print(model1Fit.summary())
+model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model4Fit = model4.fit()
+print(model4Fit.summary())
 
 
 # %%
