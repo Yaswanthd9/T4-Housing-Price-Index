@@ -47,16 +47,17 @@ print(FinalDC)
 
 #PLOTS FOR DISTANCE
 # Overall observation: Price decreased as distance increased
-
+#%%
 #Violin Plot 
 sns.violinplot(x="DistanceDummy", y="PRICE", data= FinalDC, scale="width")
 plt.title("Price vs Distance")
 plt.xticks(range(3), ['0.25', '0.50', 'Beyond 0.50'])
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
+
 plt.show()
 
-
+#%%
 
 # Joint Plot
 sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
@@ -66,7 +67,7 @@ plt.ylabel("Price")
 plt.savefig('DistanceJoint.png')
 plt.show()
 
-
+#%%
 #Regression Plot
 sns.regplot(x="distance", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Distance")
@@ -80,7 +81,7 @@ plt.show()
 #Scatter Plots
 sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
 plt.show()
-
+#%%
 sns.scatterplot(x="DistanceDummy", y="PRICE", data=FinalDC)
 plt.show()
 
@@ -99,7 +100,7 @@ plt.ylabel("Price")
 plt.savefig('BedViolin.png')
 plt.show()
 
-
+#%%
 
 # Joint Plot
 sns.jointplot(x="BEDRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
@@ -109,7 +110,7 @@ plt.ylabel("Price")
 plt.savefig('BedJoint.png')
 plt.show()
 
-
+#%%
 #Regression Plot
 sns.regplot(x="BEDRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Bed Rooms")
@@ -118,7 +119,7 @@ plt.ylabel("Price")
 plt.savefig('BedRegplot.png')
 plt.show()
 
-
+#%%
 #Scatter Plots
 sns.scatterplot(x="BEDRM", y="PRICE", data=FinalDC)
 plt.savefig('BedroomScatter.png')
@@ -142,7 +143,7 @@ plt.ylabel("Price")
 plt.savefig('BathViolin.png')
 plt.show()
 
-
+#%%
 
 # Joint Plot
 sns.jointplot(x="BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
@@ -151,7 +152,7 @@ plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('BathJoint.png')
 plt.show()
-
+#%%
 
 #Regression Plot
 sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
@@ -331,7 +332,7 @@ plt.ylabel("Price")
 plt.savefig('priceVsstories.png')
 plt.show()
 # %%
-sns.regplot(x="metro25", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=0,line_kws={"color": "red"})
+sns.regplot(x="metro25", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10,line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Categorical: 1 is Near Metro")
 plt.ylabel("Price")
@@ -353,3 +354,12 @@ plt.savefig('priceVsLand.png')
 plt.show()
 
 # %%
+sns.lmplot(x="LANDAREA", y="PRICE", hue = 'DistanceDummy', data=FinalDC, fit_reg = True, x_jitter=10)
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Amount of Land Area")
+plt.ylabel("Price")
+plt.savefig('priceVsLand.png')
+plt.show()
+# %%
+print(FinalDC.metro50.describe())
+#%%
