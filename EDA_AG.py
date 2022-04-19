@@ -285,12 +285,22 @@ model3Fit = model3.fit()
 print( model3Fit.summary() )
 
 
+
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+
+
+
+
 
 model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 model4Fit = model4.fit()
 print(model4Fit.summary())
+
+
+
+
+
 
 # %%
 
