@@ -34,4 +34,61 @@ print( type(modelTitanicAllLogitFit) )
 print( modelTitanicAllLogitFit.summary() )
 # %%
 
-+ AC + NUM_UNITS + LANDAREA
+
+
+
+
+
+#### OTHER SCATTER PLOTS ####
+#Regression Plot
+sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="ROOMS", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Rooms")
+plt.ylabel("Price")
+plt.show()
+#%%
+#%%
+sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
+plt.show()
+#%%
+def stories(row, colname): # colname can be 'rincome', 'income' etc
+  thisstory = row[colname]
+  if (thisstory < 20): return thisstory
+  if (thisstory > 20): return np.nan
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+FinalDC['STORIES'] = FinalDC.apply(stories, colname='STORIES', axis=1)
+# %%
+sns.regplot(x="STORIES", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Stories")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="metro25", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=0,line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Categorical: 1 is Near Metro")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="metro50", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Categorical: 1 is Near Metro")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="LANDAREA", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Amount of Land Area")
+plt.ylabel("Price")
+plt.show()
+
+# %%

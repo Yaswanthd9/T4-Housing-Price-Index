@@ -25,20 +25,21 @@ def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
-
-#Dropping 1 values in price
+#%%
 def PRICE(PRICE): # colname can be 'rincome', 'income' etc
-  
+  PRICE = row[colname]
   if PRICE == 1: return np.nan
   if PRICE > 1: return PRICE
   else: return np.nan
 
-#Dropping NAs
 FinalDC.dropna(inplace=True)
 
-#Creating/Updating the new column
-FinalDC['PRICE'] = FinalDC['PRICE'].apply(PRICE)
 
+#Creating the new column
+FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+
+
+#%%
 # display the dataframe
 print(FinalDC)
   
@@ -244,27 +245,81 @@ print( glmmodel1Fit.summary() )
 
 
 #GLM model with all the variables 
-glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATH + AC', data=FinalDC, family=sm.families.Binomial())
+glmmodel2 = glm(formula='PRICE ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + AC + LANDAREA', data=FinalDC, family=sm.families.Binomial())
 
-glmmodel2Fit = glmmodel2.fit()
-print( glmmodel2Fit.summary() )
+glmmodel1Fit = glmmodel1.fit()
+print( glmmodel1Fit.summary() )
 
 
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
 
-model3 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
 
-model3Fit = model3.fit()
-print( model3Fit.summary() )
+model1Fit = model1.fit()
+print( model1Fit.summary() )
 
 
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
-model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
-model4Fit = model4.fit()
-print(model4Fit.summary())
+model1 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + C(CNDTN) + BATHRM + BEDRM + AC + LANDAREA', data=FinalDC)
+model1Fit = model1.fit()
+print(model1Fit.summary())
 
+
+# %%
+
+#### OTHER SCATTER PLOTS ####
+#Regression Plot
+sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="ROOMS", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Rooms")
+plt.ylabel("Price")
+plt.show()
+#%%
+#%%
+sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
+plt.show()
+#%%
+def stories(row, colname): # colname can be 'rincome', 'income' etc
+  thisstory = row[colname]
+  if (thisstory < 20): return thisstory
+  if (thisstory > 20): return np.nan
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+FinalDC['STORIES'] = FinalDC.apply(stories, colname='STORIES', axis=1)
+# %%
+sns.regplot(x="STORIES", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=10, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Stories")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="metro25", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, x_jitter=0,line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Categorical: 1 is Near Metro")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="metro50", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Categorical: 1 is Near Metro")
+plt.ylabel("Price")
+plt.show()
+# %%
+sns.regplot(x="LANDAREA", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"},line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Amount of Land Area")
+plt.ylabel("Price")
+plt.show()
 
 # %%
