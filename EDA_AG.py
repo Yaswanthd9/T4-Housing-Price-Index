@@ -51,6 +51,17 @@ FinalDC.dropna(inplace=True)
 
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+# def PRICE(row, colname): # colname can be 'rincome', 'income' etc
+#   thisprice = row[colname]
+#   if thisprice == 1: return np.nan
+#   if thisprice > 1: return thisprice
+#   else: return np.nan
+
+# FinalDC.dropna(inplace=True)
+
+
+# #Creating the new column
+# FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
 
 #%%
@@ -80,6 +91,13 @@ plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
 plt.savefig('DistanceJoint.png')
 plt.show()
+
+x= ['0.5', '1', 'Greater than 1']
+default_x_ticks = range(len(x))
+plt.xticks(default_x_ticks, x)
+plt.savefig('DistanceJoint.png')
+plt.show()
+
 
 #%%
 #Regression Plot
@@ -264,7 +282,7 @@ plt.show()
 
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
-import stargazer
+# import stargazer
 # from stargazer.stargazer import Stargazer
 # from IPython.core.display import HTML
 
@@ -297,6 +315,30 @@ model1 = ols(formula='PRICE ~ STORIES + metro25 + metro50 + STORIES + LANDAREA +
 
 model1Fit = model1.fit()
 print( model1Fit.summary() )
+glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC, family=sm.families.Binomial())
+
+glmmodel1Fit = glmmodel1.fit()
+print(glmmodel1Fit.summary())
+#%%
+# stargazer = Stargazer([glmmodel1Fit])
+# HTML(stargazer.render_html())
+
+#%%
+#GLM model with all the variables 
+glmmodel2 = glm(formula='PRICE ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+
+glmmodel2Fit = glmmodel2.fit()
+print( glmmodel2Fit.summary() )
+
+#%%
+#OLS to get the r-squared value 
+from statsmodels.formula.api import ols
+#%%
+model3 = ols(formula='PRICE ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+
+model3Fit = model3.fit()
+print( model3Fit.summary() )
+
 
 
 #Logging Price 
@@ -359,6 +401,18 @@ FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 model4Fit = model4.fit()
 print(model4Fit.summary())
+
+
+
+
+model4 = ols(formula='log_price ~ metro25 + metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+model4Fit = model4.fit()
+print(model4Fit.summary())
+
+
+
+
+
 
 # %%
 
