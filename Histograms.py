@@ -150,7 +150,7 @@ y = pricedf1.PRICE # Target variable
 #pricedf1.head()
 # %%
 from sklearn.model_selection import train_test_split
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=0)
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.25,random_state=1)
 # %%
 from sklearn.linear_model import LogisticRegression
 
