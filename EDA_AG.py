@@ -264,7 +264,7 @@ FinalDC['metro25'] = FinalDC['.25metro']
 FinalDC['metro50'] = FinalDC['.50metro']
 #%%
 #GLM model with distance dummies 
-glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC, family=sm.families.Binomial())
+glmmodel1 = glm(formula='PRICE ~ metro50 + metro1', data=FinalDC)
 
 glmmodel1Fit = glmmodel1.fit()
 print(glmmodel1Fit.summary())
