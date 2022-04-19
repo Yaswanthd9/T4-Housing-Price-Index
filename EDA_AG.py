@@ -320,6 +320,7 @@ sns.regplot(x="LANDAREA", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Amount of Land Area")
 plt.ylabel("Price")
+plt.savefig('priceVsLand')
 plt.show()
 
 # %%
