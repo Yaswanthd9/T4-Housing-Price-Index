@@ -288,16 +288,10 @@ model3 = ols(formula='PRICE ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BA
 model3Fit = model3.fit()
 print( model3Fit.summary() )
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 #%%
 #Logging Price 
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 #%%
-<<<<<<< Updated upstream
-=======
 dfCorr = pd.DataFrame(FinalDC, columns= ['log_price', 'CNDTN', 'AC', 'metro50', 'metro1', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
 #%%
 correlation = dfCorr.corr()
@@ -306,9 +300,8 @@ print(correlation)
 correlation.to_csv('corrMatrix.csv')
 
 #%%
->>>>>>> Stashed changes
 model4 = ols(formula='log_price ~ metro50 + metro1 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
-model4Fit = model4.fit()
+model4Fit = model4.fit(cov_type='HC3')
 print(model4Fit.summary())
 
 # %%
