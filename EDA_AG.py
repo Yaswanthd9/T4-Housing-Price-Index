@@ -25,7 +25,7 @@ def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
 #Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
-
+#%%
 def PRICE(PRICE): # colname can be 'rincome', 'income' etc
   PRICE = row[colname]
   if PRICE == 1: return np.nan
@@ -74,7 +74,7 @@ plt.ylabel("Price")
 plt.show()
 
 
-
+#%%
 #Scatter Plots
 sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
 plt.show()
