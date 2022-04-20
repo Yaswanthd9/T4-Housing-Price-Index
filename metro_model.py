@@ -175,6 +175,10 @@ secondDCdf.to_csv('newDistanceDC.csv')
 
 
 #%%
+def dummy25(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if (thisdistance <= .25): return 1
+  if (thisdistance > .25): return 0
 def dummy50(row, colname): # colname can be 'rincome', 'income' etc
   thisdistance = row[colname]
   if (thisdistance <= .5): return 1
@@ -183,11 +187,16 @@ def dummy50(row, colname): # colname can be 'rincome', 'income' etc
 # end function cleanDfIncome
 print("\nReady to continue.")
 # %%
+df3['.25metro'] = df3.apply(dummy25, colname='distance', axis=1)
 df3['metro50'] = df3.apply(dummy50, colname='distance', axis=1)
 # %%
 df3.head()
 
 # %%
+def dummy50(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if ( 0.25 < thisdistance <=0.5 ): return 1
+  if (thisdistance > .5): return 0
 def dummy1(row, colname): # colname can be 'rincome', 'income' etc
   thisdistance = row[colname]
   if (0.5 <thisdistance): return 1
@@ -196,6 +205,31 @@ def dummy1(row, colname): # colname can be 'rincome', 'income' etc
 # end function cleanDfIncome
 print("\nReady to continue.")
 # %%
+df3['.50metro'] = df3.apply(dummy25, colname='distance', axis=1)
+#%%
+
+def dummy1(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if (thisdistance <= 1): return 1
+  if (thisdistance > 1): return 0
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+df3['1metro'] = df3.apply(dummy1, colname='distance', axis=1)
+
+
+#%%
+
+def dummy2(row, colname): # colname can be 'rincome', 'income' etc
+  thisdistance = row[colname]
+  if (1 < thisdistance <=2): return 1
+  if (thisdistance > 1): return 0
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+df3['2metro'] = df3.apply(dummy2, colname='distance', axis=1)
 df3['metro1'] = df3.apply(dummy1, colname='distance', axis=1)
 #%%
 
@@ -231,6 +265,20 @@ df3
 
 df4['distance'] = df3['distance']
 #%%
+df4['.25metro'] = df3['.25metro']
+
+#%%
+df4['.50metro'] = df3['.50metro']
+
+df4['1metro'] = df3['1metro']
+
+#%%
+df4['2metro'] = df3['2metro']
+df4.head()
+# %%
+totalDCdf= df4.copy()
+totalDCdf.to_csv('FinalDC.csv')
+# %%
 # df4['.25metro'] = df3['.25metro']
 
 #%%
