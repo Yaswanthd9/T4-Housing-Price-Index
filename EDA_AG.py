@@ -254,14 +254,15 @@ plt.show()
 
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
+from statsmodels.formula.api import ols
 # import stargazer
 # from stargazer.stargazer import Stargazer
 # from IPython.core.display import HTML
 
 #%%
 #renaming columns 
-FinalDC['metro25'] = FinalDC['.25metro']
-FinalDC['metro50'] = FinalDC['.50metro']
+# FinalDC['metro25'] = FinalDC['.25metro']
+# FinalDC['metro50'] = FinalDC['.50metro']
 #%%
 #GLM model with distance dummies 
 glmmodel1 = ols(formula='PRICE ~ metro50 ', data=FinalDC)
@@ -282,6 +283,7 @@ print( glmmodel2Fit.summary() )
 #%%
 #OLS to get the r-squared value 
 from statsmodels.formula.api import ols
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 #%%
 model3 = ols(formula='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 
@@ -429,3 +431,310 @@ plt.show()
 # %%
 print(FinalDC.metro50.describe())
 #%%
+#####################################
+####### STEPWISE SELECTION ##########
+#####################################
+FinalDC.columns
+#%%
+y= FinalDC["PRICE"]
+x= FinalDC.drop(['Unnamed: 0.2', 'Unnamed: 0.1', 'Unnamed: 0', 'CITY', 'STATE', 'ZIPCODE', 'NATIONALGRID','LATITUDE','LONGITUDE', 'SQUARE', 'X', 'Y', 'QUADRANT', 'year', 'distance2',  '.25metro', 'PRICE' ] , axis=1)
+
+#%%
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+#%%
+model4 = ols(formula='log_price ~ metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC + ROOMS + NUM_UNITS + C(STRUCT) + EYB' , data=FinalDC)
+model4Fit = model4.fit(cov_type='HC3')
+print(model4Fit.summary())
+#%%
+formulaAll='log_price ~ metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC + ROOMS + NUM_UNITS + C(STRUCT) + EYB' 
+#%%
+formulaA = 'log_price ~ metro50'
+formulaB= 'log_price ~ STORIES'
+formulaC= 'log_price ~ LANDAREA'
+formulaD = 'log_price ~ CNDTN'
+formulaE = 'log_price ~  BATHRM '
+formulaF = 'log_price ~ HF_BATHRM'
+formulaG= 'log_price ~ AC'
+formulaH = 'log_price ~ROOMS'
+formulaI= 'log_price ~NUM_UNITS'
+formulaJ= 'log_price ~C(STRUCT)'
+formulaK= 'log_price ~EYB'
+#%%
+modelA = ols(formula=formulaA, data=FinalDC)
+modelAFit = modelA.fit(cov_type='HC3')
+
+modelB = ols(formula=formulaB, data=FinalDC)
+modelBFit = modelB.fit(cov_type='HC3')
+
+modelC = ols(formula=formulaC, data=FinalDC)
+modelCFit = modelC.fit(cov_type='HC3')
+
+modelD = ols(formula=formulaD, data=FinalDC)
+modelDFit = modelD.fit(cov_type='HC3')
+
+modelE = ols(formula=formulaE, data=FinalDC)
+modelEFit = modelE.fit(cov_type='HC3')
+
+modelF = ols(formula=formulaF, data=FinalDC)
+modelFFit = modelF.fit(cov_type='HC3')
+
+modelG = ols(formula=formulaG, data=FinalDC)
+modelGFit = modelG.fit(cov_type='HC3')
+
+modelH = ols(formula=formulaH, data=FinalDC)
+modelHFit = modelH.fit(cov_type='HC3')
+
+modelI = ols(formula=formulaI, data=FinalDC)
+modelIFit = modelI.fit(cov_type='HC3')
+
+modelJ = ols(formula=formulaJ, data=FinalDC)
+modelJFit = modelJ.fit(cov_type='HC3')
+
+modelK = ols(formula=formulaK, data=FinalDC)
+modelKFit = modelK.fit(cov_type='HC3')
+#%%
+
+print('Model A:',modelAFit.rsquared)
+print('Model B:',modelBFit.rsquared)
+print('Model C:',modelCFit.rsquared)
+print('Model D:',modelDFit.rsquared)
+print('Model E:',modelEFit.rsquared)
+print('Model F:',modelFFit.rsquared)
+print('Model G' ,modelGFit.rsquared)
+print('Model H:',modelHFit.rsquared)
+print('Model I:',modelIFit.rsquared)
+print('Model J:',modelJFit.rsquared)
+print('Model K:',modelKFit.rsquared)
+# %%
+max1= max(modelAFit.rsquared,
+modelBFit.rsquared,
+modelCFit.rsquared,
+modelDFit.rsquared,
+modelEFit.rsquared,
+modelFFit.rsquared,
+modelGFit.rsquared,
+modelHFit.rsquared,
+modelIFit.rsquared,
+modelJFit.rsquared,
+modelKFit.rsquared)
+print(max1)
+
+#%%
+formulaA = 'log_price ~ BATHRM +metro50'
+formulaB= 'log_price ~ BATHRM +STORIES'
+formulaC= 'log_price ~ BATHRM +LANDAREA'
+formulaD = 'log_price ~ BATHRM +CNDTN'
+# formulaE = 'log_price ~  BATHRM '
+formulaF = 'log_price ~ BATHRM +HF_BATHRM'
+formulaG= 'log_price ~BATHRM + AC'
+formulaH = 'log_price ~BATHRM +ROOMS'
+formulaI= 'log_price ~BATHRM +NUM_UNITS'
+formulaJ= 'log_price ~BATHRM +C(STRUCT)'
+formulaK= 'log_price ~BATHRM +EYB'
+# %%
+modelA = ols(formula=formulaA, data=FinalDC)
+modelAFit = modelA.fit(cov_type='HC3')
+
+modelB = ols(formula=formulaB, data=FinalDC)
+modelBFit = modelB.fit(cov_type='HC3')
+
+modelC = ols(formula=formulaC, data=FinalDC)
+modelCFit = modelC.fit(cov_type='HC3')
+
+modelD = ols(formula=formulaD, data=FinalDC)
+modelDFit = modelD.fit(cov_type='HC3')
+
+# modelE = ols(formula=formulaE, data=FinalDC)
+# modelEFit = modelE.fit(cov_type='HC3')
+
+modelF = ols(formula=formulaF, data=FinalDC)
+modelFFit = modelF.fit(cov_type='HC3')
+
+modelG = ols(formula=formulaG, data=FinalDC)
+modelGFit = modelG.fit(cov_type='HC3')
+
+modelH = ols(formula=formulaH, data=FinalDC)
+modelHFit = modelH.fit(cov_type='HC3')
+
+modelI = ols(formula=formulaI, data=FinalDC)
+modelIFit = modelI.fit(cov_type='HC3')
+
+modelJ = ols(formula=formulaJ, data=FinalDC)
+modelJFit = modelJ.fit(cov_type='HC3')
+
+modelK = ols(formula=formulaK, data=FinalDC)
+modelKFit = modelK.fit(cov_type='HC3')
+#%%
+print('Model A:',modelAFit.rsquared)
+print('Model B:',modelBFit.rsquared)
+print('Model C:',modelCFit.rsquared)
+print('Model D:',modelDFit.rsquared)
+# print('Model E:',modelEFit.rsquared)
+print('Model F:',modelFFit.rsquared)
+print('Model G' ,modelGFit.rsquared)
+print('Model H:',modelHFit.rsquared)
+print('Model I:',modelIFit.rsquared)
+print('Model J:',modelJFit.rsquared)
+print('Model K:',modelKFit.rsquared)
+#%%
+max2= max(modelAFit.rsquared,
+modelBFit.rsquared,
+modelCFit.rsquared,
+modelDFit.rsquared,
+# modelEFit.rsquared,
+modelFFit.rsquared,
+modelGFit.rsquared,
+modelHFit.rsquared,
+modelIFit.rsquared,
+modelJFit.rsquared,
+modelKFit.rsquared)
+print(max2)
+# %%
+print( modelJFit.summary() )
+# %%
+formulaA = 'log_price ~ C(STRUCT) +BATHRM +metro50'
+formulaB= 'log_price ~ C(STRUCT) +BATHRM +STORIES'
+formulaC= 'log_price ~ C(STRUCT) +BATHRM +LANDAREA'
+formulaD = 'log_price ~ C(STRUCT) +BATHRM +CNDTN'
+# formulaE = 'log_price ~  BATHRM '
+formulaF = 'log_price ~ C(STRUCT) +BATHRM +HF_BATHRM'
+formulaG= 'log_price ~C(STRUCT) +BATHRM + AC'
+formulaH = 'log_price ~C(STRUCT) +BATHRM +ROOMS'
+formulaI= 'log_price ~C(STRUCT) +BATHRM +NUM_UNITS'
+# formulaJ= 'log_price ~BATHRM +C(STRUCT)'
+formulaK= 'log_price ~C(STRUCT) +BATHRM +EYB'
+
+#%%
+modelA = ols(formula=formulaA, data=FinalDC)
+modelAFit = modelA.fit(cov_type='HC3')
+
+modelB = ols(formula=formulaB, data=FinalDC)
+modelBFit = modelB.fit(cov_type='HC3')
+
+modelC = ols(formula=formulaC, data=FinalDC)
+modelCFit = modelC.fit(cov_type='HC3')
+
+modelD = ols(formula=formulaD, data=FinalDC)
+modelDFit = modelD.fit(cov_type='HC3')
+
+# modelE = ols(formula=formulaE, data=FinalDC)
+# modelEFit = modelE.fit(cov_type='HC3')
+
+modelF = ols(formula=formulaF, data=FinalDC)
+modelFFit = modelF.fit(cov_type='HC3')
+
+modelG = ols(formula=formulaG, data=FinalDC)
+modelGFit = modelG.fit(cov_type='HC3')
+
+modelH = ols(formula=formulaH, data=FinalDC)
+modelHFit = modelH.fit(cov_type='HC3')
+
+modelI = ols(formula=formulaI, data=FinalDC)
+modelIFit = modelI.fit(cov_type='HC3')
+
+# modelJ = ols(formula=formulaJ, data=FinalDC)
+# modelJFit = modelJ.fit(cov_type='HC3')
+
+modelK = ols(formula=formulaK, data=FinalDC)
+modelKFit = modelK.fit(cov_type='HC3')
+#%%
+print('Model A:',modelAFit.rsquared)
+print('Model B:',modelBFit.rsquared)
+print('Model C:',modelCFit.rsquared)
+print('Model D:',modelDFit.rsquared)
+# print('Model E:',modelEFit.rsquared)
+print('Model F:',modelFFit.rsquared)
+print('Model G' ,modelGFit.rsquared)
+print('Model H:',modelHFit.rsquared)
+print('Model I:',modelIFit.rsquared)
+# print('Model J:',modelJFit.rsquared)
+print('Model K:',modelKFit.rsquared)
+#%%
+max3= max(modelAFit.rsquared,
+modelBFit.rsquared,
+modelCFit.rsquared,
+modelDFit.rsquared,
+# modelEFit.rsquared,
+modelFFit.rsquared,
+modelGFit.rsquared,
+modelHFit.rsquared,
+modelIFit.rsquared,
+# modelJFit.rsquared,
+modelKFit.rsquared)
+print(max3)
+# %%
+print( modelFFit.summary() )
+#%%
+#############
+formulaA = 'log_price ~ HF_BATHRM+ C(STRUCT) +BATHRM +metro50'
+formulaB= 'log_price ~  HF_BATHRM+C(STRUCT) +BATHRM +STORIES'
+formulaC= 'log_price ~  HF_BATHRM+C(STRUCT) +BATHRM +LANDAREA'
+formulaD = 'log_price ~  HF_BATHRM+ C(STRUCT) +BATHRM +CNDTN'
+# formulaE = 'log_price ~  BATHRM '
+# formulaF = 'log_price ~ C(STRUCT) +BATHRM +HF_BATHRM'
+formulaG= 'log_price ~  HF_BATHRM+C(STRUCT) +BATHRM + AC'
+formulaH = 'log_price ~  HF_BATHRM+ C(STRUCT) +BATHRM +ROOMS'
+formulaI= 'log_price ~  HF_BATHRM+C(STRUCT) +BATHRM +NUM_UNITS'
+# formulaJ= 'log_price ~BATHRM +C(STRUCT)'
+formulaK= 'log_price ~  HF_BATHRM+ C(STRUCT) +BATHRM +EYB'
+# %%
+modelA = ols(formula=formulaA, data=FinalDC)
+modelAFit = modelA.fit(cov_type='HC3')
+
+modelB = ols(formula=formulaB, data=FinalDC)
+modelBFit = modelB.fit(cov_type='HC3')
+
+modelC = ols(formula=formulaC, data=FinalDC)
+modelCFit = modelC.fit(cov_type='HC3')
+
+modelD = ols(formula=formulaD, data=FinalDC)
+modelDFit = modelD.fit(cov_type='HC3')
+
+# modelE = ols(formula=formulaE, data=FinalDC)
+# modelEFit = modelE.fit(cov_type='HC3')
+
+# modelF = ols(formula=formulaF, data=FinalDC)
+# modelFFit = modelF.fit(cov_type='HC3')
+
+modelG = ols(formula=formulaG, data=FinalDC)
+modelGFit = modelG.fit(cov_type='HC3')
+
+modelH = ols(formula=formulaH, data=FinalDC)
+modelHFit = modelH.fit(cov_type='HC3')
+
+modelI = ols(formula=formulaI, data=FinalDC)
+modelIFit = modelI.fit(cov_type='HC3')
+
+# modelJ = ols(formula=formulaJ, data=FinalDC)
+# modelJFit = modelJ.fit(cov_type='HC3')
+
+modelK = ols(formula=formulaK, data=FinalDC)
+modelKFit = modelK.fit(cov_type='HC3')
+# %%
+print('Model A:',modelAFit.rsquared)
+print('Model B:',modelBFit.rsquared)
+print('Model C:',modelCFit.rsquared)
+print('Model D:',modelDFit.rsquared)
+# print('Model E:',modelEFit.rsquared)
+# print('Model F:',modelFFit.rsquared)
+print('Model G' ,modelGFit.rsquared)
+print('Model H:',modelHFit.rsquared)
+print('Model I:',modelIFit.rsquared)
+# print('Model J:',modelJFit.rsquared)
+print('Model K:',modelKFit.rsquared)
+#%%
+max4= max(modelAFit.rsquared,
+modelBFit.rsquared,
+modelCFit.rsquared,
+modelDFit.rsquared,
+# modelEFit.rsquared,
+# modelFFit.rsquared,
+modelGFit.rsquared,
+modelHFit.rsquared,
+modelIFit.rsquared,
+# modelJFit.rsquared,
+modelKFit.rsquared)
+print(max4)
+# %%
+print( modelHFit.summary() )
+# %%
