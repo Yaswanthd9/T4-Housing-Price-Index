@@ -26,17 +26,7 @@ def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 
 #%%
-# def PRICE(row, colname): # colname can be 'rincome', 'income' etc
-#   thisprice = row[colname]
-#   if thisprice == 1: return np.nan
-#   if thisprice > 1: return thisprice
-#   else: return np.nan
-
-# FinalDC.dropna(inplace=True)
-
-
-# #Creating the new column
-# FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 
 
 #%%
@@ -53,6 +43,58 @@ plt.ylabel('Frequency')
 plt.title('Distribution of Home Prices')
 plt.savefig('priceHist.png')
 plt.show()
+#%%
+#############################
+##### LOG PRICE HISTOGRAM ###
+#############################
+plt.hist(x='log_price',bins=80, data= FinalDC)
+plt.xlabel('Price, 1e7')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.savefig('LogpriceHist.png')
+plt.show()
+#%%
+outBig= (8.150000e+05+(1.5*(8.150000e+05-3.650000e+05)))
+outSmall = (3.650000e+05-(1.5*(8.150000e+05-3.650000e+05)))
+#%%
+def priceOutlier(row, colname): # colname can be 'rincome', 'income' etc
+  thisprice = row[colname]
+  if (3000 < thisprice < outBig ): return thisprice
+  if (outBig < thisprice < outSmall ): return np.nan
+
+ 
+  return np.nan
+print("\nReady to continue.")
+#%%
+FinalDC['newPrice'] = FinalDC.apply(priceOutlier, colname='PRICE', axis=1)
+print("\nReady to continue.")
+#%%
+#############################
+##### NEW PRICE HISTOGRAM ###
+#############################
+plt.hist(x='newPrice',bins=80, data= FinalDC)
+plt.xlabel('Price, 1e6')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.axvline(FinalDC.newPrice.median(), color='red', linestyle='dashed', linewidth=1)
+plt.axvline(FinalDC.newPrice.mean(), color='black', linestyle='dashed', linewidth=1)
+plt.savefig('newPriceHist.png')
+plt.show()
+#%%
+FinalDC['newlog_price'] = np.log2(FinalDC['newPrice'])
+#%%
+#############################
+##### LOG PRICE HISTOGRAM ###
+#############################
+plt.hist(x='newlog_price',bins=80, data= FinalDC)
+plt.xlabel('log Price')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.axvline(FinalDC.newlog_price.median(), color='red', linestyle='dashed', linewidth=1)
+plt.axvline(FinalDC.newlog_price.mean(), color='black', linestyle='dashed', linewidth=1)
+plt.savefig('newLogPriceHist.png')
+plt.show()
+
 #%%
 #############################
 #### DISTANCE HISTOGRAM #####
@@ -100,7 +142,6 @@ def structure(row, colname): # colname can be 'rincome', 'income' etc
   if (thisstructure == 'Town End' ): return np.nan
   if (thisstructure == 'Town Inside' ): return np.nan
   return np.nan
-# end function cleanDfIncome
 print("\nReady to continue.")
 # %%
 FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
@@ -343,7 +384,8 @@ glmmodel1 = ols(formula='PRICE ~ metro50 ', data=FinalDC)
 glmmodel1Fit = glmmodel1.fit()
 print(glmmodel1Fit.summary())
 #%%
-# stargazer = Stargazer([glmmodel1Fit])
+#
+#  stargazer = Stargazer([glmmodel1Fit])
 # HTML(stargazer.render_html())
 
 #%%
@@ -400,6 +442,11 @@ FinalDC['bedSQ'].head()
 
 #%%
 formulaI= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM'
+model7 = ols(formula=formulaI , data=FinalDC)
+model7Fit = model7.fit(cov_type='HC3')
+print(model7Fit.summary())
+#%%
+formulaI= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(structure) '
 model7 = ols(formula=formulaI , data=FinalDC)
 model7Fit = model7.fit(cov_type='HC3')
 print(model7Fit.summary())
