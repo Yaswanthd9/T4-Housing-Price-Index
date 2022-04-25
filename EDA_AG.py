@@ -5,6 +5,11 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
+import statsmodels.api as sm 
+from statsmodels.formula.api import glm
+from statsmodels.formula.api import ols
+from statsmodels.formula.api import ols
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 print('Done, continue.')
 #%%
 ###################################
@@ -23,6 +28,12 @@ def DistanceDummy(distance):
   if distance > 1: return 3
   else: return 'NA'
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
+#%%
+#############################
+#############################
+############ EDA ############
+############################# 
+#############################
 #%%
 #############################
 ####### PRICE HISTOGRAM #####
@@ -116,7 +127,7 @@ plt.savefig('roomsHist.png')
 plt.show()
 #%%
 #############################
-##### STRUCTURE HISTOGRAM ###
+##### CLEAN STRUCTURE  ######
 #############################
 def structure(row, colname): # colname can be 'rincome', 'income' etc
   thisstructure = row[colname]
@@ -131,6 +142,9 @@ def structure(row, colname): # colname can be 'rincome', 'income' etc
 print("\nReady to continue.")
 FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
 #%%
+#############################
+##### STRUCTURE HISTOGRAM ###
+#############################
 plt.hist(x='structure',bins=15, data= FinalDC)
 plt.xlabel('Type of Home')
 plt.ylabel('Frequency')
@@ -265,80 +279,81 @@ plt.show()
 
 
 # %%
-
-#PLOTS FOR Condition
-
-#Violin Plot 
+#############################
+######## CNDTN VIOLIN #######
+############################# 
 sns.violinplot(x="CNDTN", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Condition")
 plt.xlabel("Condition of the home")
 plt.ylabel("Price")
 plt.savefig('ConditionViolin.png')
 plt.show()
-
 #%%
 
 # Plot for Land area
 # #Violin Plot 
-# sns.violinplot(x='LANDAREA', y="PRICE", data= FinalDC, scale="width")
-# plt.title("Price vs Condition")
-# plt.xlabel("Condition of the home")
-# plt.ylabel("Price")
-# plt.show()
+sns.violinplot(x='LANDAREA', y="newPrice", data= FinalDC, scale="width")
+plt.title("Price vs LandArea")
+plt.xlabel("")
+plt.ylabel("Price")
+plt.show()
 
 
 # %%
-
-import statsmodels.api as sm 
-from statsmodels.formula.api import glm
-from statsmodels.formula.api import ols
-# import stargazer
-# from stargazer.stargazer import Stargazer
-# from IPython.core.display import HTML
-
-#%%
-#renaming columns 
-# FinalDC['metro25'] = FinalDC['.25metro']
-# FinalDC['metro50'] = FinalDC['.50metro']
-#%%
-#GLM model with distance dummies 
-glmmodel1 = ols(formula='PRICE ~ metro50 ', data=FinalDC)
-
-glmmodel1Fit = glmmodel1.fit()
-print(glmmodel1Fit.summary())
-#%%
-#
-#  stargazer = Stargazer([glmmodel1Fit])
-# HTML(stargazer.render_html())
-
-#%%
-#GLM model with all the variables 
-glmmodel2 = glm(formula='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
-
-glmmodel2Fit = glmmodel2.fit()
-print( glmmodel2Fit.summary() )
-
-#%%
-#OLS to get the r-squared value 
-from statsmodels.formula.api import ols
-from statsmodels.stats.outliers_influence import variance_inflation_factor
-#%%
-model3 = ols(formula='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
-
-model3Fit = model3.fit()
-print( model3Fit.summary() )
-
-#%%
-#Logging Price 
+#############################
+#############################
+########## MODELING #########
+############################# 
+#############################
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+FinalDC['newlog_price'] = np.log2(FinalDC['newPrice'])
+FinalDC['roomsSQ']= FinalDC['ROOMS']*FinalDC['ROOMS']
+FinalDC['roomsSQ'].head()
 #%%
+FinalDC['bathSQ']= FinalDC['BATHRM']*FinalDC['BATHRM']
+FinalDC['bathSQ'].head()
+#%%
+FinalDC['bedSQ']= FinalDC['BEDRM']*FinalDC['BEDRM']
+FinalDC['bedSQ'].head()
+#%%
+#############################
+########## MODEL 1 ##########
+############################# 
+
+#GLM model with distance dummies 
+formula1= 'PRICE ~ metro50'
+Model1 = ols(formula= formula1, data=FinalDC)
+Model1Fit = Model1.fit()
+print(Model1Fit.summary())
+#%%
+#############################
+########## MODEL 2 ##########
+############################# 
+
+#GLM model with all the variables 
+formula2='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC'
+Model2 = glm(formula= formula2, data=FinalDC)
+Model2Fit = Model2.fit()
+print(Model2Fit.summary() )
+#%%
+#############################
+########## MODEL 3 ##########
+#############################
+
+#OLS to get the r-squared value 
+formula3='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC'
+Model3 = ols(formula= formula3, data=FinalDC)
+Model3Fit = Model3.fit()
+print(Model3Fit.summary())
+
+#%%
+#############################
+######## CORR MATRIX ########
+#############################
 dfCorr = pd.DataFrame(FinalDC, columns= ['log_price', 'CNDTN', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
-#%%
 correlation = dfCorr.corr()
 print(correlation)
-#%%
 correlation.to_csv('corrMatrix.csv')
-
 #%%
 model4 = ols(formula='log_price ~ metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
 model4Fit = model4.fit(cov_type='HC3')
@@ -353,14 +368,7 @@ model6 = ols(formula='log_price ~ metro50 + ROOMS + BATHRM + CNDTN + HF_BATHRM',
 model6Fit = model6.fit(cov_type='HC3')
 print(model6Fit.summary())
 #%%
-FinalDC['roomsSQ']= FinalDC['ROOMS']*FinalDC['ROOMS']
-FinalDC['roomsSQ'].head()
-#%%
-FinalDC['bathSQ']= FinalDC['BATHRM']*FinalDC['BATHRM']
-FinalDC['bathSQ'].head()
-#%%
-FinalDC['bedSQ']= FinalDC['BEDRM']*FinalDC['BEDRM']
-FinalDC['bedSQ'].head()
+
 
 
 #%%
@@ -1449,4 +1457,17 @@ plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('RoomRegplot.png')
-plt.show()
+plt.show(
+#%%
+# import stargazer
+# from stargazer.stargazer import Stargazer
+# from IPython.core.display import HTML
+
+#%%
+#renaming columns 
+# FinalDC['metro25'] = FinalDC['.25metro']
+# FinalDC['metro50'] = FinalDC['.50metro']
+#%%
+#
+#  stargazer = Stargazer([glmmodel1Fit])
+# HTML(stargazer.render_html())
