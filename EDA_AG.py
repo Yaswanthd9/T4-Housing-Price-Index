@@ -142,7 +142,9 @@ plt.xticks(default_x_ticks, x)
 plt.savefig('structureHist.png')
 plt.show()
 #%%
-#Violin Plot 
+#############################
+##### DISTANCE VIOLIN #######
+#############################
 sns.violinplot(x="DistanceDummy", y="newPrice",data= FinalDC, scale="width")
 plt.title("Price vs Distance")
 plt.xticks(range(3), ['0.25', '0.50', 'Beyond 0.50'])
@@ -150,7 +152,9 @@ plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
 plt.show()
 #%%
-# Joint Plot
+#############################
+##### DISTANCE JOINTPLOT ####
+#############################
 sns.jointplot(x="distance", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'red'})
 plt.suptitle("Price vs Distance")
 # plt.title("Price vs Distance")
@@ -161,42 +165,23 @@ plt.suptitle("Price vs Distance")
 # plt.xticks(default_x_ticks, x)
 plt.savefig('DistanceJoint.png')
 plt.show()
-#%%
-#Regression Plot
-sns.regplot(x="distance", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
-plt.title("Price vs Distance")
-plt.xlabel("Distance to the metro")
-plt.ylabel("Price")
-plt.savefig('DistanceRegplot.png')
-plt.show()
-
-
-#%%
-#Scatter Plots
-sns.scatterplot(x="distance", y="newPrice", data=FinalDC)
-plt.show()
-#%%
-sns.scatterplot(x="DistanceDummy", y="newPrice", data=FinalDC)
-plt.show()
-
-
-
 # %%
+#############################
+##### BEDROOM VIOLIN ########
+#############################
 
-#PLOTS FOR BEDROOMS
 # Overall observation: price increased as the number of bedrooms increased
 
-#Violin Plot 
 sns.violinplot(x="BEDRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
 plt.savefig('BedViolin.png')
 plt.show()
-
 #%%
-
-# Joint Plot
+#############################
+##### BEDROOM JOINTPLOT #####
+#############################
 sns.jointplot(x="BEDRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
@@ -204,42 +189,22 @@ plt.ylabel("Price")
 plt.savefig('BedJoint.png')
 plt.show()
 
-#%%
-#Regression Plot
-sns.regplot(x="BEDRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
-plt.title("Price vs Bed Rooms")
-plt.xlabel("Number of Bed Rooms")
-plt.ylabel("Price")
-plt.savefig('BedRegplot.png')
-plt.show()
-
-#%%
-#Scatter Plots
-sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
-plt.savefig('BedroomScatter.png')
-plt.show()
-
-
-sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
-plt.show()
-
-
 # %%
-
-#PLOTS FOR BATHROOMS
+#############################
+##### BATHROOM VIOLIN #######
+#############################
 # Overall observation: price increased as the number of bedrooms increased
 
-#Violin Plot 
 sns.violinplot(x="BATHRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('BathViolin.png')
 plt.show()
-
 #%%
-
-# Joint Plot
+#############################
+#### BATHROOM JOINTPLOT #####
+#############################
 sns.jointplot(x="BATHRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
@@ -248,13 +213,6 @@ plt.savefig('BathJoint.png')
 plt.show()
 #%%
 
-#Regression Plot
-sns.regplot(x="BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
-plt.title("Price vs Bath Rooms")
-plt.xlabel("Number of Bath Rooms")
-plt.ylabel("Price")
-plt.savefig('BathRegplot.png')
-plt.show()
 
 
 # %%
@@ -1272,19 +1230,6 @@ modelNFit.rsquared)
 print(max8)
 # %%
 print( modelBFit.summary() )
-
-
-
-
-
-
-
-
-
-
-
-
-
 # %%
 # formulaB= 'log_price ~  LANDAREA+ metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM+STORIES'
 formulaI= 'log_price ~ STORIES+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM+NUM_UNITS'
@@ -1459,3 +1404,52 @@ print(max11)
 # %%
 print( modelKFit.summary() )
 # %%
+#%%
+####################################
+######### EXTRA PLOTS ##############
+####################################
+#Regression Plot
+sns.regplot(x="distance", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Distance")
+plt.xlabel("Distance to the metro")
+plt.ylabel("Price")
+plt.savefig('DistanceRegplot.png')
+plt.show()
+
+
+#%%
+#Scatter Plots
+sns.scatterplot(x="distance", y="newPrice", data=FinalDC)
+plt.show()
+#%%
+sns.scatterplot(x="DistanceDummy", y="newPrice", data=FinalDC)
+plt.show()
+#%%
+#%%
+#Regression Plot
+sns.regplot(x="BEDRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bed Rooms")
+plt.xlabel("Number of Bed Rooms")
+plt.ylabel("Price")
+plt.savefig('BedRegplot.png')
+plt.show()
+
+#%%
+#Scatter Plots
+sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
+plt.savefig('BedroomScatter.png')
+plt.show()
+
+
+sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
+plt.show()
+
+#%%
+
+#Regression Plot
+sns.regplot(x="BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.savefig('BathRegplot.png')
+plt.show()
