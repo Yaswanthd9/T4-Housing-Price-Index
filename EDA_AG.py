@@ -358,7 +358,7 @@ correlation.to_csv('corrMatrix.csv')
 #############################
 ########## MODEL 4 ##########
 #############################
-formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM'
+formula4= 'log_price ~ bedSQ + roomsSQ + LANDAREA + metro50 + ROOMS + HF_BATHRM + C(STRUCT)+ BATHRM'
 Model4 = ols(formula=formula4 , data=FinalDC)
 Model4Fit = Model4.fit(cov_type='HC3')
 print(Model4Fit.summary())
@@ -366,7 +366,7 @@ print(Model4Fit.summary())
 #############################
 ########## MODEL 5 ##########
 #############################
-formula5= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(structure) '
+formula5= 'newlog_price ~ bedSQ + roomsSQ + metro50 + ROOMS + HF_BATHRM + BATHRM +C(structure) '
 Model5 = ols(formula=formula5 , data=FinalDC)
 Model5Fit = Model5.fit(cov_type='HC3')
 print(Model5Fit.summary())
@@ -435,16 +435,16 @@ formulaA = 'log_price ~ metro50'
 formulaB= 'log_price ~ STORIES'
 formulaC= 'log_price ~ LANDAREA'
 formulaD = 'log_price ~ CNDTN'
-formulaE = 'log_price ~  BATHRM '
+formulaE = 'log_price ~ BATHRM '
 formulaF = 'log_price ~ HF_BATHRM'
 formulaG= 'log_price ~ AC'
-formulaH = 'log_price ~ROOMS'
-formulaI= 'log_price ~NUM_UNITS'
-formulaJ= 'log_price ~C(STRUCT)'
-formulaK= 'log_price ~EYB'
-formulaL = 'log_price ~roomsSQ'
-formulaM = 'log_price ~bathSQ'
-formulaN = 'log_price ~bedSQ'
+formulaH = 'log_price ~ ROOMS'
+formulaI= 'log_price ~ NUM_UNITS'
+formulaJ= 'log_price ~ C(STRUCT)'
+formulaK= 'log_price ~ EYB'
+formulaL = 'log_price ~ roomsSQ'
+formulaM = 'log_price ~ bathSQ'
+formulaN = 'log_price ~ bedSQ'
 #%%
 modelA = ols(formula=formulaA, data=FinalDC)
 modelAFit = modelA.fit(cov_type='HC3')
