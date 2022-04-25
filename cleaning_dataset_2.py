@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 # import dm6103 as dm
 # %%
+
 dc = pd.read_csv('DCHousing.csv')
 # %%
 dc.head()

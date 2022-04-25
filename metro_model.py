@@ -6,31 +6,32 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 #%%
-
+###################################
+###### Load in the  Datasets ######
+###################################
 df= pd.read_csv('DC_Cleaned_Housing.csv')
 df.head()
-#%%
 metro = pd.read_csv('Metro_Stations_Regional.csv')
 metro.head()
 metro_new = metro.drop(['WEB_URL', 'TRAININFO_URL','SE_ANNO_CAD_DATA', 'OBJECTID', 'CREATED', 'EDITOR','EDITED', 'CREATOR' ], axis=1)
 metro_new.head()
 #%%
+###################################
+### subset lat and long coords ####
+###################################
 # metro_new.to_csv('Metro_Cleaned.csv')
 df_new = metro_new.iloc[:, [0,1,]]
 df_new.head()
-#%%
 print(df_new)
-#%%
 records= df_new.to_records(index=False)
 print(records)
-#%%
-
-
-#%%
 # metrostations = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )  # (long,lat)
 # list2 = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )
 list2 = records
 #%%
+#####EEE##############################
+### Function to find closest dist. ###
+#######EEE############################
 def findClosestMetroDist( row, metrostations ) :
   '''
   @row : a row of data in our dataframe
@@ -45,12 +46,6 @@ def findClosestMetroDist( row, metrostations ) :
   #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
   return result
   
-# def findDistBtw2Pts( point1 ,point2 ):
-#   dist=0
-#   return dist
-
-
-# Python 3 program to calculate Distance Between Two Points on Earth
 from math import radians, cos, sin, asin, sqrt
 def findDistBtw2Pts( point1 ,point2 ):
   # The math module contains a function named
@@ -76,33 +71,36 @@ def findDistBtw2Pts( point1 ,point2 ):
     
   # calculate the result
   return(c * r)
-     
-     
-# driver code
-# lat1 = 53.32055555555556
-# lat2 = 53.31861111111111
-# lon1 = -1.7297222222222221
-# lon2 =  -1.6997222222222223
-# print(distance(lat1, lat2, lon1, lon2), "K.M")
-#%%
-findClosestMetroDist( df.loc[0], list2 )
-#%%
-# df.apply(findClosestMetroDist)
-# %%
 
 #%%
+###################################
+##### now, test the function ######
+###################################
+findClosestMetroDist( df.loc[0], list2 )
+# df.apply(findClosestMetroDist)
+#%%
+################################################
+### apply the function to every row of list2 ###
+################################################
 df2 = [findClosestMetroDist(df.loc[i], list2) for i in range(0,12399)]
 # %%
-#this is a list still
+###################################
+### this returns a list, df2 ######
+###################################
 df2
-
 #%%
+###################################
+### convert the list to a df ######
+###################################
 column_names = ['distance']
 df3 = pd.DataFrame(df2, columns=column_names)
 # df3.rename(columns= {0:'distance'})
 print(df3)
 df3.describe()
 # %%
+###################################
+####### visualize the data ########
+###################################
 plt.hist(x='distance', bins=50, data = df3)
 
 #%%
@@ -116,65 +114,14 @@ print(df4)
 # %%
 df3.head()
 
-# n = df3
-# for i in n:
-#       2*sqrt((n^2/2))
-
-#%%
-# def distance (row, dataframe):
-#    homepoint = ( row['distance'])
-
-#%%
-def distance (hyp):
-      h= hyp
-      a= h**2
-      b=a/2
-      c=sqrt(b)
-      d=2*c
-      return d
-
-# def distance (hyp)
-
-
-# %%
-def convert( row, frame ):
-  pt = ( row['distance'] )
-  
-  result = [ distance( pt) for i in frame ]
-  
-  
-  # for metrostation in metrostations:
-  #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
-  return result
-
-
-
-#%%
-convert( df3.loc[2], df3 )
-# %%
-df6 = [convert( df3.loc[i], df3 ) for i in range(1,12398)]
-# %%
-print(df6)
-# %%
-column_names = ['distance']
-df7 = pd.DataFrame(df6, columns=column_names)
-# df3.rename(columns= {0:'distance'})
-print(df7)
-df7.describe()
-# %%
-plt.hist(x='distance', bins=20, data = df7)
-# %%
 totalDCdf= df4.copy()
 totalDCdf.to_csv('FinalDCdf.csv')
-#%%
-
-df4['distance2'] = df7
-secondDCdf=df4.copy()
-secondDCdf.to_csv('newDistanceDC.csv')
-# %%
 
 
 #%%
+###################################
+### create dummy variables ########
+###################################
 def dummy25(row, colname): # colname can be 'rincome', 'income' etc
   thisdistance = row[colname]
   if (thisdistance <= .25): return 1
@@ -297,3 +244,60 @@ totalDCdf.to_csv('FinalDC.csv')
 
 totalDCdf.metro1.describe()
 # %%
+
+#%%
+# n = df3
+# for i in n:
+#       2*sqrt((n^2/2))
+
+#%%
+# def distance (row, dataframe):
+#    homepoint = ( row['distance'])
+
+# #%%
+# def distance (hyp):
+#       h= hyp
+#       a= h**2
+#       b=a/2
+#       c=sqrt(b)
+#       d=2*c
+#       return d
+
+# # def distance (hyp)
+
+
+# # %%
+# def convert( row, frame ):
+#   pt = ( row['distance'] )
+  
+#   result = [ distance( pt) for i in frame ]
+  
+  
+#   # for metrostation in metrostations:
+#   #   findDistBtw2Pts(metrostation[0],metrostation[1],x,y)
+#   return result
+
+
+
+# #%%
+# convert( df3.loc[2], df3 )
+# # %%
+# df6 = [convert( df3.loc[i], df3 ) for i in range(1,12398)]
+# # %%
+# print(df6)
+# # %%
+# column_names = ['distance']
+# df7 = pd.DataFrame(df6, columns=column_names)
+# # df3.rename(columns= {0:'distance'})
+# print(df7)
+# df7.describe()
+# # %%
+# plt.hist(x='distance', bins=20, data = df7)
+# # %%
+
+# #%%
+
+# df4['distance2'] = df7
+# secondDCdf=df4.copy()
+# secondDCdf.to_csv('newDistanceDC.csv')
+# # %%
