@@ -320,7 +320,7 @@ FinalDC['bedSQ'].head()
 ############################# 
 
 #GLM model with distance dummies 
-formula1= 'PRICE ~ metro50'
+formula1= 'newPrice ~ metro50'
 Model1 = ols(formula= formula1, data=FinalDC)
 Model1Fit = Model1.fit(cov_type='HC3')
 print(Model1Fit.summary())
@@ -330,7 +330,7 @@ print(Model1Fit.summary())
 ############################# 
 
 #GLM model with all the variables 
-formula2='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM'
+formula2='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_BATHRM'
 Model2 = glm(formula= formula2, data=FinalDC)
 Model2Fit = Model2.fit()
 print(Model2Fit.summary() )
@@ -340,7 +340,7 @@ print(Model2Fit.summary() )
 #############################
 
 #OLS to get the r-squared value 
-formula3='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC'
+formula3='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_BATHRM + AC'
 Model3 = ols(formula= formula3, data=FinalDC)
 Model3Fit = Model3.fit()
 print(Model3Fit.summary())
@@ -350,7 +350,7 @@ print(Model3Fit.summary())
 ######## CORR MATRIX ########
 #############################
 
-dfCorr = pd.DataFrame(FinalDC, columns= ['log_price', 'CNDTN', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
+dfCorr = pd.DataFrame(FinalDC, columns= ['newlog_price','newPrice', 'structure', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
 correlation = dfCorr.corr()
 print(correlation)
 correlation.to_csv('corrMatrix.csv')
