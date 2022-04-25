@@ -129,7 +129,6 @@ def structure(row, colname): # colname can be 'rincome', 'income' etc
   if (thisstructure == 'Town Inside' ): return np.nan
   return np.nan
 print("\nReady to continue.")
-# %%
 FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
 #%%
 plt.hist(x='structure',bins=15, data= FinalDC)
@@ -142,44 +141,26 @@ plt.xticks(default_x_ticks, x)
 # plt.axvline(FinalDC.ROOMS.median(), color='red', linestyle='dashed', linewidth=1)
 plt.savefig('structureHist.png')
 plt.show()
-
-#%%
-
-#PLOTS FOR DISTANCE
-# Overall observation: Price decreased as distance increased
 #%%
 #Violin Plot 
-sns.violinplot(x="DistanceDummy", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="DistanceDummy", y="newPrice",data= FinalDC, scale="width")
 plt.title("Price vs Distance")
 plt.xticks(range(3), ['0.25', '0.50', 'Beyond 0.50'])
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
-
 plt.show()
-
 #%%
-
 # Joint Plot
-sns.jointplot(x="distance", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
-plt.title("Price vs Distance")
-plt.xlabel("Distance to the metro")
-plt.ylabel("Price")
-x= ['0.5', '1', 'Greater than 1']
-default_x_ticks = range(len(x))
-plt.xticks(default_x_ticks, x)
-# plt.savefig('DistanceJoint.png')
-plt.show()
-#%%
-sns.jointplot(x="distance", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
-plt.title("Price vs Distance")
-plt.xlabel("Distance to the metro")
-plt.ylabel("Price")
-x= ['0.5', '1', 'Greater than 1']
-default_x_ticks = range(len(x))
-plt.xticks(default_x_ticks, x)
+sns.jointplot(x="distance", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'red'})
+plt.suptitle("Price vs Distance")
+# plt.title("Price vs Distance")
+# plt.xlabel("Distance to the metro")
+# sns.ylabel("Price")
+# x= ['0.5', '1', 'Greater than 1']
+# default_x_ticks = range(len(x))
+# plt.xticks(default_x_ticks, x)
 plt.savefig('DistanceJoint.png')
 plt.show()
-
 #%%
 #Regression Plot
 sns.regplot(x="distance", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
