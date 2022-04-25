@@ -184,9 +184,6 @@ plt.show()
 #############################
 ##### BEDROOM VIOLIN ########
 #############################
-
-# Overall observation: price increased as the number of bedrooms increased
-
 sns.violinplot(x="BEDRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
@@ -325,7 +322,7 @@ FinalDC['bedSQ'].head()
 #GLM model with distance dummies 
 formula1= 'PRICE ~ metro50'
 Model1 = ols(formula= formula1, data=FinalDC)
-Model1Fit = Model1.fit()
+Model1Fit = Model1.fit(cov_type='HC3')
 print(Model1Fit.summary())
 #%%
 #############################
@@ -333,7 +330,7 @@ print(Model1Fit.summary())
 ############################# 
 
 #GLM model with all the variables 
-formula2='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC'
+formula2='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM'
 Model2 = glm(formula= formula2, data=FinalDC)
 Model2Fit = Model2.fit()
 print(Model2Fit.summary() )
