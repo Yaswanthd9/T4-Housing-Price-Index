@@ -324,6 +324,9 @@ formula1= 'newPrice ~ metro50'
 Model1 = ols(formula= formula1, data=FinalDC)
 Model1Fit = Model1.fit(cov_type='HC3')
 print(Model1Fit.summary())
+Model1Fit.params.to_csv('Model1params.csv')
+Model1Fit.bse.to_csv('Model1errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 2 ##########
@@ -334,6 +337,9 @@ formula2='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_
 Model2 = glm(formula= formula2, data=FinalDC)
 Model2Fit = Model2.fit()
 print(Model2Fit.summary() )
+Model2Fit.params.to_csv('Model2params.csv')
+Model2Fit.bse.to_csv('Model2errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 3 ##########
@@ -344,6 +350,9 @@ formula3='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_
 Model3 = ols(formula= formula3, data=FinalDC)
 Model3Fit = Model3.fit()
 print(Model3Fit.summary())
+Model3Fit.params.to_csv('Model3params.csv')
+Model3Fit.bse.to_csv('Model3errors.csv')
+print("\nReady to continue.")
 
 #%%
 #############################
@@ -362,6 +371,9 @@ formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(structu
 Model4 = ols(formula=formula4 , data=FinalDC)
 Model4Fit = Model4.fit(cov_type='HC3')
 print(Model4Fit.summary())
+Model4Fit.params.to_csv('Model4params.csv')
+Model4Fit.bse.to_csv('Model4errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 5 ##########
@@ -370,6 +382,10 @@ formula5= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(struct
 Model5 = ols(formula=formula5 , data=FinalDC)
 Model5Fit = Model5.fit(cov_type='HC3')
 print(Model5Fit.summary())
+Model5Fit.params.to_csv('Model5params.csv')
+Model5Fit.bse.to_csv('Model5errors.csv')
+print("\nReady to continue.")
+
 #%%
 #############################
 #############################
