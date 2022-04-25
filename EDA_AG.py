@@ -10,6 +10,7 @@ from statsmodels.formula.api import glm
 from statsmodels.formula.api import ols
 from statsmodels.formula.api import ols
 from statsmodels.stats.outliers_influence import variance_inflation_factor
+from statsmodels.graphics.gofplots import ProbPlot
 print('Done, continue.')
 #%%
 ###################################
@@ -307,6 +308,7 @@ plt.show()
 #############################
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 FinalDC['newlog_price'] = np.log2(FinalDC['newPrice'])
+#%%
 FinalDC['roomsSQ']= FinalDC['ROOMS']*FinalDC['ROOMS']
 FinalDC['roomsSQ'].head()
 #%%
@@ -350,68 +352,61 @@ print(Model3Fit.summary())
 #############################
 ######## CORR MATRIX ########
 #############################
+
 dfCorr = pd.DataFrame(FinalDC, columns= ['log_price', 'CNDTN', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
 correlation = dfCorr.corr()
 print(correlation)
 correlation.to_csv('corrMatrix.csv')
 #%%
-model4 = ols(formula='log_price ~ metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
-model4Fit = model4.fit(cov_type='HC3')
-print(model4Fit.summary())
+#############################
+########## MODEL 4 ##########
+#############################
+formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM'
+Model4 = ols(formula=formula4 , data=FinalDC)
+Model4Fit = Model4.fit(cov_type='HC3')
+print(Model4Fit.summary())
+#%%
+#############################
+########## MODEL 5 ##########
+#############################
+formula5= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(structure) '
+Model5 = ols(formula=formula5 , data=FinalDC)
+Model5Fit = Model5.fit(cov_type='HC3')
+print(Model5Fit.summary())
+#%%
+#############################
+#############################
+########## ANALYSIS #########
+############################# 
+#############################
 
 #%%
-model5 = ols(formula='log_price ~ metro50', data=FinalDC)
-model5Fit = model5.fit(cov_type='HC3')
-print(model5Fit.summary())
-#%%
-model6 = ols(formula='log_price ~ metro50 + ROOMS + BATHRM + CNDTN + HF_BATHRM', data=FinalDC)
-model6Fit = model6.fit(cov_type='HC3')
-print(model6Fit.summary())
-#%%
-
-
-
-#%%
-formulaI= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM'
-model7 = ols(formula=formulaI , data=FinalDC)
-model7Fit = model7.fit(cov_type='HC3')
-print(model7Fit.summary())
-#%%
-formulaI= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(structure) '
-model7 = ols(formula=formulaI , data=FinalDC)
-model7Fit = model7.fit(cov_type='HC3')
-print(model7Fit.summary())
-
-#%%
-FinalDC.head()
-
-# %%
-
-#%%
-model_fitted_y =model4Fit.fittedvalues
-model_residuals = model4Fit.resid
-
-plt.scatter(x=model_residuals, y= model_fitted_y)
-plt.show()
-#%%
-model_norm_residuals = model4Fit.get_influence().resid_studentized_internal
+#############################
+######### RESIDUALS #########
+#############################
+model_fitted_y =Model5Fit.fittedvalues
+model_residuals = Model5Fit.resid
+# plt.scatter(x=model_residuals, y= model_fitted_y)
+# plt.show()
+model_norm_residuals = Model5Fit.get_influence().resid_studentized_internal
 model_norm_residuals_abs_sqrt = np.sqrt(np.abs(model_norm_residuals))
 model_abs_resid = np.abs(model_residuals)
-model_leverage = model4Fit.get_influence().hat_matrix_diag
+model_leverage = Model5Fit.get_influence().hat_matrix_diag
 plot_lm_1 = plt.figure()
 plot_lm_1.axes[0] = sns.residplot(model_abs_resid,model_fitted_y, data=FinalDC)
 plt.title('Residuals vs Fitted')
 plt. xlabel('Fitted values')
 plt.ylabel('Residuals')
-plt.savefig('resid')
+plt.savefig('resid.png')
 
 #%%
-from statsmodels.graphics.gofplots import ProbPlot
-#%%
+#############################
+########## QQ NORM ##########
+#############################
 QQ = ProbPlot(model_norm_residuals)
 plot_lm_2 = QQ.qqplot(line='45', alpha=0.5, color='#4C72B0', lw=1)
 plt.title('Normal Q-Q')
-plt.savefig('normalqq')
+plt.savefig('normalqq.png')
 # %%
 
 #### OTHER SCATTER PLOTS ####
@@ -487,9 +482,6 @@ print(FinalDC.metro50.describe())
 ####### STEPWISE SELECTION ##########
 #####################################
 FinalDC.columns
-#%%
-
-
 #%%
 FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 #%%
@@ -1471,3 +1463,18 @@ plt.show(
 #
 #  stargazer = Stargazer([glmmodel1Fit])
 # HTML(stargazer.render_html())
+
+# #%%
+# model4 = ols(formula='log_price ~ metro50 + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC', data=FinalDC)
+# model4Fit = model4.fit(cov_type='HC3')
+# print(model4Fit.summary())
+
+# #%%
+# model5 = ols(formula='log_price ~ metro50', data=FinalDC)
+# model5Fit = model5.fit(cov_type='HC3')
+# print(model5Fit.summary())
+# #%%
+# model6 = ols(formula='log_price ~ metro50 + ROOMS + BATHRM + CNDTN + HF_BATHRM', data=FinalDC)
+# model6Fit = model6.fit(cov_type='HC3')
+# print(model6Fit.summary())
+#%%
