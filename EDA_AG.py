@@ -358,7 +358,7 @@ correlation.to_csv('corrMatrix.csv')
 #############################
 ########## MODEL 4 ##########
 #############################
-formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(STRUCT)+BATHRM'
+formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(structure)+BATHRM'
 Model4 = ols(formula=formula4 , data=FinalDC)
 Model4Fit = Model4.fit(cov_type='HC3')
 print(Model4Fit.summary())
