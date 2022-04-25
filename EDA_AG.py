@@ -181,13 +181,22 @@ plt.ylabel("Price")
 x= ['0.5', '1', 'Greater than 1']
 default_x_ticks = range(len(x))
 plt.xticks(default_x_ticks, x)
+# plt.savefig('DistanceJoint.png')
+plt.show()
+#%%
+sns.jointplot(x="distance", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+plt.title("Price vs Distance")
+plt.xlabel("Distance to the metro")
+plt.ylabel("Price")
+x= ['0.5', '1', 'Greater than 1']
+default_x_ticks = range(len(x))
+plt.xticks(default_x_ticks, x)
 plt.savefig('DistanceJoint.png')
 plt.show()
 
-
 #%%
 #Regression Plot
-sns.regplot(x="distance", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+sns.regplot(x="distance", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Distance")
 plt.xlabel("Distance to the metro")
 plt.ylabel("Price")
@@ -197,10 +206,10 @@ plt.show()
 
 #%%
 #Scatter Plots
-sns.scatterplot(x="distance", y="PRICE", data=FinalDC)
+sns.scatterplot(x="distance", y="newPrice", data=FinalDC)
 plt.show()
 #%%
-sns.scatterplot(x="DistanceDummy", y="PRICE", data=FinalDC)
+sns.scatterplot(x="DistanceDummy", y="newPrice", data=FinalDC)
 plt.show()
 
 
@@ -211,7 +220,7 @@ plt.show()
 # Overall observation: price increased as the number of bedrooms increased
 
 #Violin Plot 
-sns.violinplot(x="BEDRM", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="BEDRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
@@ -221,7 +230,7 @@ plt.show()
 #%%
 
 # Joint Plot
-sns.jointplot(x="BEDRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+sns.jointplot(x="BEDRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
@@ -230,7 +239,7 @@ plt.show()
 
 #%%
 #Regression Plot
-sns.regplot(x="BEDRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+sns.regplot(x="BEDRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Bed Rooms")
 plt.xlabel("Number of Bed Rooms")
 plt.ylabel("Price")
@@ -239,12 +248,12 @@ plt.show()
 
 #%%
 #Scatter Plots
-sns.scatterplot(x="BEDRM", y="PRICE", data=FinalDC)
+sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
 plt.savefig('BedroomScatter.png')
 plt.show()
 
 
-sns.scatterplot(x="BEDRM", y="PRICE", data=FinalDC)
+sns.scatterplot(x="BEDRM", y="newPrice", data=FinalDC)
 plt.show()
 
 
@@ -254,7 +263,7 @@ plt.show()
 # Overall observation: price increased as the number of bedrooms increased
 
 #Violin Plot 
-sns.violinplot(x="BATHRM", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="BATHRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -264,7 +273,7 @@ plt.show()
 #%%
 
 # Joint Plot
-sns.jointplot(x="BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+sns.jointplot(x="BATHRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -273,7 +282,7 @@ plt.show()
 #%%
 
 #Regression Plot
-sns.regplot(x="BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+sns.regplot(x="BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -287,7 +296,7 @@ plt.show()
 # Overall observation: price increased as the number of half baths increased
 #%%
 #Violin Plot 
-sns.violinplot(x="HF_BATHRM", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="HF_BATHRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -297,7 +306,7 @@ plt.show()
 
 #%%
 # Joint Plot
-sns.jointplot(x="HF_BATHRM", y="PRICE", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+sns.jointplot(x="HF_BATHRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -306,7 +315,7 @@ plt.show()
 
 #%%
 #Regression Plot
-sns.regplot(x="HF_BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+sns.regplot(x="HF_BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -322,7 +331,7 @@ FinalDC['STORIES'] = FinalDC['STORIES'].dropna()
 print(FinalDC.STORIES)
 #%%
 #Violin Plot 
-sns.violinplot(x="STORIES", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="STORIES", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Stories")
 plt.xlabel("Number of Stories")
 plt.ylabel("Price")
@@ -333,7 +342,7 @@ plt.show()
 #PLOTS FOR AC
 
 #Violin Plot 
-sns.violinplot(x="AC", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="AC", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
@@ -346,7 +355,7 @@ plt.show()
 #PLOTS FOR Condition
 
 #Violin Plot 
-sns.violinplot(x="CNDTN", y="PRICE", data= FinalDC, scale="width")
+sns.violinplot(x="CNDTN", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Condition")
 plt.xlabel("Condition of the home")
 plt.ylabel("Price")
