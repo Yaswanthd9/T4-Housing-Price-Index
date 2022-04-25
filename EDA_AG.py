@@ -44,6 +44,79 @@ FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 print(FinalDC)
   
 #%%
+#############################
+####### PRICE HISTOGRAM #####
+#############################
+plt.hist(x='PRICE',bins=80, data= FinalDC)
+plt.xlabel('Price, 1e7')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.savefig('priceHist.png')
+plt.show()
+#%%
+#############################
+#### DISTANCE HISTOGRAM #####
+#############################
+plt.hist(x='distance',bins=50, data= FinalDC)
+plt.xlabel('Distance (mi)')
+plt.ylabel('Frequency')
+plt.title('Distribution of Distances')
+plt.axvline(FinalDC.distance.median(), color='red', linestyle='dashed', linewidth=1)
+plt.savefig('distanceHist.png')
+plt.show()
+#%%
+#############################
+##### BEDROOM HISTOGRAM #####
+#############################
+plt.hist(x='BEDRM',bins=15, data= FinalDC)
+plt.xlabel('Number of Bedrooms')
+plt.ylabel('Frequency')
+plt.title('Distribution of Bedrooms')
+plt.axvline(FinalDC.BEDRM.median(), color='red', linestyle='dashed', linewidth=1)
+plt.savefig('bedroomHist.png')
+plt.show()
+#%%
+#############################
+####### ROOMS HISTOGRAM #####
+#############################
+plt.hist(x='ROOMS',bins=15, data= FinalDC)
+plt.xlabel('Number of Rooms')
+plt.ylabel('Frequency')
+plt.title('Distribution of Rooms')
+plt.axvline(FinalDC.ROOMS.median(), color='red', linestyle='dashed', linewidth=1)
+plt.savefig('roomsHist.png')
+plt.show()
+#%%
+#############################
+##### STRUCTURE HISTOGRAM ###
+#############################
+def structure(row, colname): # colname can be 'rincome', 'income' etc
+  thisstructure = row[colname]
+  if (thisstructure == 'Row Inside'): return 1
+  if (thisstructure == 'Multi' ): return 2
+  if (thisstructure == 'Semi-Detached' ): return 3
+  if (thisstructure == 'Row End' ): return 4
+  if (thisstructure == 'Single' ): return 5
+  if (thisstructure == 'Town End' ): return np.nan
+  if (thisstructure == 'Town Inside' ): return np.nan
+  return np.nan
+# end function cleanDfIncome
+print("\nReady to continue.")
+# %%
+FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
+#%%
+plt.hist(x='structure',bins=15, data= FinalDC)
+plt.xlabel('Type of Home')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Type')
+x= ['','Row Inside', 'Multi', 'Semi-Det.', 'Row-End', 'Single']
+default_x_ticks = range(len(x))
+plt.xticks(default_x_ticks, x)
+# plt.axvline(FinalDC.ROOMS.median(), color='red', linestyle='dashed', linewidth=1)
+plt.savefig('structureHist.png')
+plt.show()
+
+#%%
 
 #PLOTS FOR DISTANCE
 # Overall observation: Price decreased as distance increased
