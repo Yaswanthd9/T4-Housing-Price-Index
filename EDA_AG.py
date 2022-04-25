@@ -1392,7 +1392,7 @@ plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('RoomRegplot.png')
-plt.show(
+plt.show()
 #%%
 # import stargazer
 # from stargazer.stargazer import Stargazer
