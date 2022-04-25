@@ -5,34 +5,24 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
-
 print('Done, continue.')
-
 #%%
+###################################
+### Load in the Cleaned Dataset ###
+###################################
 FinalDC = pd.read_csv('FinalDC.csv')
 FinalDC.head()
-
 # %%
-
-# Creating a dummy column for EDA 
-def DistanceDummy(distance): # colname can be 'rincome', 'income' etc
-  
+###################################
+# Creating a dummy column for 3 
+# categories of distance for EDA
+# ################################### 
+def DistanceDummy(distance): 
   if distance <= 0.50: return 1
   if distance > 0.50 and distance <= 1: return 2
   if distance > 1: return 3
   else: return 'NA'
-
-#Creating the new column
 FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
-
-#%%
-FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
-
-
-#%%
-# display the dataframe
-print(FinalDC)
-  
 #%%
 #############################
 ####### PRICE HISTOGRAM #####
@@ -47,6 +37,7 @@ plt.show()
 #############################
 ##### LOG PRICE HISTOGRAM ###
 #############################
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
 plt.hist(x='log_price',bins=80, data= FinalDC)
 plt.xlabel('Price, 1e7')
 plt.ylabel('Frequency')
@@ -57,15 +48,12 @@ plt.show()
 outBig= (8.150000e+05+(1.5*(8.150000e+05-3.650000e+05)))
 outSmall = (3.650000e+05-(1.5*(8.150000e+05-3.650000e+05)))
 #%%
-def priceOutlier(row, colname): # colname can be 'rincome', 'income' etc
+def priceOutlier(row, colname): 
   thisprice = row[colname]
   if (3000 < thisprice < outBig ): return thisprice
   if (outBig < thisprice < outSmall ): return np.nan
-
- 
   return np.nan
 print("\nReady to continue.")
-#%%
 FinalDC['newPrice'] = FinalDC.apply(priceOutlier, colname='PRICE', axis=1)
 print("\nReady to continue.")
 #%%
@@ -81,11 +69,10 @@ plt.axvline(FinalDC.newPrice.mean(), color='black', linestyle='dashed', linewidt
 plt.savefig('newPriceHist.png')
 plt.show()
 #%%
-FinalDC['newlog_price'] = np.log2(FinalDC['newPrice'])
-#%%
 #############################
 ##### LOG PRICE HISTOGRAM ###
 #############################
+FinalDC['newlog_price'] = np.log2(FinalDC['newPrice'])
 plt.hist(x='newlog_price',bins=80, data= FinalDC)
 plt.xlabel('log Price')
 plt.ylabel('Frequency')
@@ -94,7 +81,6 @@ plt.axvline(FinalDC.newlog_price.median(), color='red', linestyle='dashed', line
 plt.axvline(FinalDC.newlog_price.mean(), color='black', linestyle='dashed', linewidth=1)
 plt.savefig('newLogPriceHist.png')
 plt.show()
-
 #%%
 #############################
 #### DISTANCE HISTOGRAM #####
