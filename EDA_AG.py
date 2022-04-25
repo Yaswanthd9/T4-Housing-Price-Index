@@ -211,51 +211,40 @@ plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('BathJoint.png')
 plt.show()
-#%%
-
-
-
 # %%
-
 #PLOTS FOR Half BATHROOMS
-# Overall observation: price increased as the number of half baths increased
+# Overall observation: price 
+# increased as the number of half 
+# baths increased
 #%%
-#Violin Plot 
+#############################
+##### HALFBATH VIOLIN #######
+#############################
 sns.violinplot(x="HF_BATHRM", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('halfViolin.png')
 plt.show()
-
-
 #%%
-# Joint Plot
+#############################
+#### HALFBATH JOINTPLOT #####
+#############################
 sns.jointplot(x="HF_BATHRM", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
 plt.title("Price vs Bath Rooms")
-plt.xlabel("Number of Bath Rooms")
+plt.xlabel("Number of Half-BathRooms")
 plt.ylabel("Price")
 plt.savefig('hfJoint.png')
 plt.show()
-
-#%%
-#Regression Plot
-sns.regplot(x="HF_BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
-plt.title("Price vs Bath Rooms")
-plt.xlabel("Number of Bath Rooms")
-plt.ylabel("Price")
-plt.savefig('RoomRegplot.png')
-plt.show()
-
-
 # %%
 #PLOTS FOR STORIES
-
 FinalDC['STORIES'] = FinalDC['STORIES'].round()
 FinalDC['STORIES'] = FinalDC['STORIES'].dropna()
 print(FinalDC.STORIES)
 #%%
-#Violin Plot 
+#############################
+###### STORIES VIOLIN #######
+############################# 
 sns.violinplot(x="STORIES", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Stories")
 plt.xlabel("Number of Stories")
@@ -264,14 +253,14 @@ plt.savefig('StoriesViolin.png')
 plt.show()
 
 # %%
-#PLOTS FOR AC
-
-#Violin Plot 
+#############################
+######### AC VIOLIN #########
+############################# 
 sns.violinplot(x="AC", y="newPrice", data= FinalDC, scale="width")
 plt.title("Price vs Bath Rooms")
-plt.xlabel("Number of Bath Rooms")
+plt.xlabel("Air Conditioner")
 plt.ylabel("Price")
-plt.savefig('BathViolin.png')
+plt.savefig('acViolin.png')
 plt.show()
 
 
@@ -1452,4 +1441,12 @@ plt.title("Price vs Bath Rooms")
 plt.xlabel("Number of Bath Rooms")
 plt.ylabel("Price")
 plt.savefig('BathRegplot.png')
+plt.show()
+#%%
+#Regression Plot
+sns.regplot(x="HF_BATHRM", y="newPrice", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.savefig('RoomRegplot.png')
 plt.show()
