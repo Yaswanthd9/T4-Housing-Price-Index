@@ -184,6 +184,27 @@ plt.savefig('DistanceJoint.png')
 plt.show()
 # %%
 #############################
+##### ROOMS VIOLIN ##########
+#############################
+sns.violinplot(x="ROOMS", y="newPrice", data= FinalDC, scale="width")
+plt.title("Price vs Rooms")
+plt.xlabel("Number of Rooms")
+plt.ylabel("Price")
+plt.savefig('RoomsViolin.png')
+plt.show()
+
+#%%
+#############################
+##### ROOMS JOINTPLOT #######
+#############################
+sns.jointplot(x="ROOMS", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+plt.title("Price vs Rooms")
+plt.xlabel("Number of Rooms")
+plt.ylabel("Price")
+plt.savefig('RoomsJoint.png')
+plt.show()
+#%%
+#############################
 ##### BEDROOM VIOLIN ########
 #############################
 sns.violinplot(x="BEDRM", y="newPrice", data= FinalDC, scale="width")
@@ -284,7 +305,7 @@ plt.show()
 #############################
 ######## CNDTN VIOLIN #######
 ############################# 
-sns.violinplot(x="CNDTN", y="newPrice", data= FinalDC, scale="width")
+sns.violinplot(x="CNDTN", y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True, order=[ "Poor", "Fair", "Average", "Good", "Very Good", "Excellent"])
 plt.title("Price vs Condition")
 plt.xlabel("Condition of the home")
 plt.ylabel("Price")
@@ -294,7 +315,7 @@ plt.show()
 
 # Plot for Land area
 # #Violin Plot 
-sns.violinplot(x='LANDAREA', y="newPrice", data= FinalDC, scale="width")
+sns.violinplot(x='LANDAREA', y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True)
 plt.title("Price vs LandArea")
 plt.xlabel("")
 plt.ylabel("Price")
