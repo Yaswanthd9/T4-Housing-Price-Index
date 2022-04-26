@@ -8,7 +8,6 @@ import seaborn as sns
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
 from statsmodels.formula.api import ols
-from statsmodels.formula.api import ols
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.graphics.gofplots import ProbPlot
 print('Done, continue.')
@@ -320,37 +319,46 @@ FinalDC['bedSQ'].head()
 ############################# 
 
 #GLM model with distance dummies 
-formula1= 'PRICE ~ metro50'
+formula1= 'newPrice ~ metro50'
 Model1 = ols(formula= formula1, data=FinalDC)
 Model1Fit = Model1.fit(cov_type='HC3')
 print(Model1Fit.summary())
+Model1Fit.params.to_csv('Model1params.csv')
+Model1Fit.bse.to_csv('Model1errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 2 ##########
 ############################# 
 
 #GLM model with all the variables 
-formula2='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM'
+formula2='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_BATHRM'
 Model2 = glm(formula= formula2, data=FinalDC)
 Model2Fit = Model2.fit()
 print(Model2Fit.summary() )
+Model2Fit.params.to_csv('Model2params.csv')
+Model2Fit.bse.to_csv('Model2errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 3 ##########
 #############################
 
 #OLS to get the r-squared value 
-formula3='PRICE ~ metro50  + STORIES + LANDAREA + CNDTN + BATHRM + HF_BATHRM + AC'
+formula3='newPrice ~ metro50  + STORIES + LANDAREA + C(structure) + BATHRM + HF_BATHRM + AC'
 Model3 = ols(formula= formula3, data=FinalDC)
 Model3Fit = Model3.fit()
 print(Model3Fit.summary())
+Model3Fit.params.to_csv('Model3params.csv')
+Model3Fit.bse.to_csv('Model3errors.csv')
+print("\nReady to continue.")
 
 #%%
 #############################
 ######## CORR MATRIX ########
 #############################
 
-dfCorr = pd.DataFrame(FinalDC, columns= ['log_price', 'CNDTN', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
+dfCorr = pd.DataFrame(FinalDC, columns= ['newlog_price','newPrice', 'structure', 'AC', 'metro50', 'STORIES', 'LANDAREA', 'BATHRM', 'ROOMS', 'HF_BATHRM'])
 correlation = dfCorr.corr()
 print(correlation)
 correlation.to_csv('corrMatrix.csv')
@@ -358,18 +366,25 @@ correlation.to_csv('corrMatrix.csv')
 #############################
 ########## MODEL 4 ##########
 #############################
-formula4= 'log_price ~ bedSQ + roomsSQ + LANDAREA + metro50 + ROOMS + HF_BATHRM + C(STRUCT)+ BATHRM'
+formula4= 'log_price ~ bedSQ+roomsSQ+LANDAREA+metro50+ROOMS+HF_BATHRM+ C(structure)+BATHRM'
 Model4 = ols(formula=formula4 , data=FinalDC)
 Model4Fit = Model4.fit(cov_type='HC3')
 print(Model4Fit.summary())
+Model4Fit.params.to_csv('Model4params.csv')
+Model4Fit.bse.to_csv('Model4errors.csv')
+print("\nReady to continue.")
 #%%
 #############################
 ########## MODEL 5 ##########
 #############################
-formula5= 'newlog_price ~ bedSQ + roomsSQ + metro50 + ROOMS + HF_BATHRM + BATHRM +C(structure) '
+formula5= 'newlog_price ~ bedSQ+roomsSQ+metro50+ROOMS+HF_BATHRM+BATHRM +C(structure) '
 Model5 = ols(formula=formula5 , data=FinalDC)
 Model5Fit = Model5.fit(cov_type='HC3')
 print(Model5Fit.summary())
+Model5Fit.params.to_csv('Model5params.csv')
+Model5Fit.bse.to_csv('Model5errors.csv')
+print("\nReady to continue.")
+
 #%%
 #############################
 #############################
@@ -435,16 +450,16 @@ formulaA = 'log_price ~ metro50'
 formulaB= 'log_price ~ STORIES'
 formulaC= 'log_price ~ LANDAREA'
 formulaD = 'log_price ~ CNDTN'
-formulaE = 'log_price ~ BATHRM '
+formulaE = 'log_price ~  BATHRM '
 formulaF = 'log_price ~ HF_BATHRM'
 formulaG= 'log_price ~ AC'
-formulaH = 'log_price ~ ROOMS'
-formulaI= 'log_price ~ NUM_UNITS'
-formulaJ= 'log_price ~ C(STRUCT)'
-formulaK= 'log_price ~ EYB'
-formulaL = 'log_price ~ roomsSQ'
-formulaM = 'log_price ~ bathSQ'
-formulaN = 'log_price ~ bedSQ'
+formulaH = 'log_price ~ROOMS'
+formulaI= 'log_price ~NUM_UNITS'
+formulaJ= 'log_price ~C(STRUCT)'
+formulaK= 'log_price ~EYB'
+formulaL = 'log_price ~roomsSQ'
+formulaM = 'log_price ~bathSQ'
+formulaN = 'log_price ~bedSQ'
 #%%
 modelA = ols(formula=formulaA, data=FinalDC)
 modelAFit = modelA.fit(cov_type='HC3')
