@@ -29,7 +29,7 @@ print(records)
 # list2 = ( (-77.16462968, 39.11993515)  , (-77.14612767,39.08432943)  )
 list2 = records
 #%%
-#####EEE##############################
+######################################
 ### Function to find closest dist. ###
 #######EEE############################
 def findClosestMetroDist( row, metrostations ) :
