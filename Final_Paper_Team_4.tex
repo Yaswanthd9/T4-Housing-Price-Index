@@ -86,7 +86,7 @@ where $\delta_1$ is the paramater of interest and denotes the price differential
 \tab The term house fixed effects encompasses the home attributes that do not change on average, including the number of bathrooms \& half-bathrooms, the lot size, the number rooms, the number of kitchens, and the type of structure.\\ \\
 \tab In Model 4, this paper performs a stepwise selection process to determine which of the nine home fixed effects should be included in the final model. The stepwise selection independently estimates $price$ as a function of the nine home fixed effects and the $metro.5$ variable for a total of ten regressions. The term with the highest $R^2$ is added to the model, we call this $variable1$. Next, nine regressions are run, each with $variable1$ and the other eight variables; the term with the highest $R^2$ is added, we call this $variable2$. This process is repeated, adding the variable that results in the highest $R^2$ and removing variables that are not statistically significant. Model 4, estimates $\text{(log)}price$ as a function of the variables chosen by this method. \\ \\
 \tab We expect the sign on $metro.5$ to be positive and moderately large as this paper hypothesizes that homes located within the half mile radius will be more expensive. We also expect the signs on $bedrooms$, $bathrooms$, $size$, $landarea$ to all be positive, indicating a higher price given more of these home attributes. We expect some of the structures to have a positive sign and others to have a negative sign, based on the style and quality of the structure. The results of the four regression models can be found in the next section.\\ \\
-\tab To eliminate any multicollinearity issues, this paper examines a correlation matrix to identify independent variables that correlate with one another. Table~\ref{} illustrates the correlation matrix, with high values denoted in red. 
+\tab To eliminate any multicollinearity issues, this paper examines a correlation matrix to identify independent variables that correlate with one another. Table~\ref{} illustrates the correlation matrix, with high values denoted in red.
 \begin{table}[h!]
 \centering
 \begin{tabular}{|c| c | c |c |c |c |c |c | c | c|} 
@@ -105,7 +105,7 @@ Rooms&	0.357& 	0.389&0.095 & 	-0.170&	0.030& \textbf{\color{red}{0.506}}&	\textb
 Half&	0.321& 	0.348&0.099& 	-0.105&	0.031&	0.306&	0.290& 	0.3963&	1 \\ [0.5ex]\hline
 \hline
 \end{tabular}
-\caption{Values above 0.50 are highlighted in red. Note that the correlation between log(price) and Price are not considered as they do not appear in the same model.}
+\caption{\footnotesize Values above 0.50 are highlighted in red. Note that the correlation between log(price) and Price are not considered as they do not appear in the same model.}
 \label{table:1}
 \end{table}
 
@@ -152,38 +152,47 @@ parameter of interest: $\delta_1$\\
 \begin{tabular}{lccccc} 
 %\multicolumn{6}{c}{ \textbf{DinD Treatment Effects on NOx}} \\
 \hline\hline\\[0.001ex]
-         &           \multicolumn{2}{c}{$Price$} &                        \multicolumn{3}{c}{Log($Price$)}                 \\ [0.1ex] \cline{2-3} \cline{5-6}  
+         &           \multicolumn{4}{c}{$Price$} &                        \multicolumn{1}{c}{Log($Price$)}                 \\ [0.1ex] \cline{2-4} \cline{6-6}  
 \\[0.001ex]
-         &                   (1) &              (2) &&                      (3) &                            (4) \\ [0.5ex] 
+         &                   (1) &              (2) &                      (3) &&                            (4) \\ [0.5ex] 
 \hline \\[0.1ex]
-Intercept &        677,370.12*** &  -183455.49       &&           1.2574      &                            1.2903   \\ [0.5ex]
-          &           (6659.41)          &  (0.046)        &&         (0.073)       &                          (0.086) \\ [0.5ex]
-metro50 &         449324.88*** &    173696.19   &&          -0.0479      &                         -0.1371    \\ [0.5ex]
-           &        (57806.31)       & (0.064)         &&          (0.078)       &                         (0.100) \\ [0.5ex]
-bathroom &                                  &  272713.30       &&            -0.0673      &                        -0.0595    \\ [0.5ex]
-           &                         & (0.070)        &&          (0.076)        &                        (0.110) \\ [0.5ex] 
-landarea &                       &  47.74   & &         -0.3515**    &                        -0.3334**   \\ [0.5ex]
-              &                     &  (0.117)       & &         (0.106)        &                         (0.147) \\ [0.5ex]
-lpop &                          &                     &&          0.2152***  &                         0.2157***   \\ [0.5ex]
-               &                   &                   && (0.044)               &                          (0.044) \\ [0.5ex]
-rural &                           &                   &&      -0.1068***    &                         -0.1769   \\ [0.5ex]
-                &                   &                 & &            (0.053)  &                          (0.103) \\ [0.5ex]
-yr15*rural &                    &                  & &                         &                         -0.016  \\ [0.5ex]
-                    &                &                  &&                         &                         (0.154) \\ [0.5ex]
-ca*rural &                        &                  &&                         &                          0.1801    \\ [0.5ex]
-                    &                 &                  & &                       &                          (0.122) \\ [0.5ex]
-yr15*ca*rural &                 &                  &  &                       &                        -0.0357    \\ [0.5ex]
-                          &           &                  &&                         &                        (0.213) \\ [0.5ex]
-Fixed Effects &       No&             No &&                   Yes &                         Yes    \\ [0.5ex]
-Observations&            9778 &           200&&                  200 &                         200   \\ [0.5ex]
-$R^2$ &                     0.023 &         0.119&&                 0.284 &                      0.293  \\ [0.5ex]
-Rdj-$R^2$&                 0.022&        0.106& &                0.265 &                     0.264    \\ [0.5ex]
+Intercept&	574364.70\footnotesize***&	189648.32\footnotesize***&	248707.05&&	17.70\footnotesize*** \\
+&	\footnotesize[-3424.27]&	\footnotesize(19850.63)&	\footnotesize(263607.00)&&	\footnotesize[0.10] \\
+metro50&	24776.83\footnotesize***&	97631.25\footnotesize***&	96892.24\footnotesize***&&	0.21\footnotesize*** \\
+&	\footnotesize[8176.48]&	\footnotesize(12838.28)&	\footnotesize(12821.84)&&	\footnotesize[0.03] \\
+Stories&	&	63388.06\footnotesize***&	64507.54\footnotesize***&	 \\
+&	&	\footnotesize(8460.41)&	\footnotesize(8447.44)	&& \\
+Land&	 &	7.84\footnotesize***&	9.04&	& \\
+&	&	\footnotesize(2.52)&	\footnotesize(2.53)&	& \\
+Bedroom&	&	150960.90\footnotesize***&	143963.93\footnotesize***&&	0.32\footnotesize*** \\
+&	&	\footnotesize(4490.45)&	\footnotesize(4717.21)&&	\footnotesize[0.01]\\
+Half&	&	94667.83\footnotesize***&	87127.34\footnotesize***&&	0.24\footnotesize*** \\
+&	&	\footnotesize(6886.83)&	\footnotesize(7053.45)&&	\footnotesize([0.02]\\
+Multi&	&	-331169.10\footnotesize***&	-309597.28\footnotesize***&&	-0.78\footnotesize*** \\
+&	&	\footnotesize(18996.8)2&	\footnotesize(19493.71)&&	\footnotesize[0.06] \\
+Detached&	&	-190811.19\footnotesize***& -197509.55\footnotesize***&&	-0.54\footnotesize*** \\
+&	&	\footnotesize(11459.7)8&	\footnotesize(11522.49)&&	\footnotesize[0.03] \\
+Row&	 &	-52120.28\footnotesize***&	-57029.36\footnotesize***&& 	-0.17\footnotesize*** \\
+&	&	\footnotesize(12490.2)4&	\footnotesize(12507.49)&&	\footnotesize[0.03] \\
+Single&	&	-77761.28\footnotesize***&	-83945.82\footnotesize***&&	-0.25\footnotesize*** \\
+&	&	\footnotesize(13528.3)0&	\footnotesize(13562.47)&&	\footnotesize[0.03]\\
+Rooms&	&	&	&&	0.16\footnotesize***\\
+&	&	&	&&	\footnotesize[0.02] \\
+$Rooms^2$&	&	&	&&	-0.01\footnotesize*** \\
+&	&	&	&&	\footnotesize[0.00] \\
+$Bed^2$&	&	&	&&	0.005\footnotesize*** \\
+&	&	&&	&	\footnotesize[0.00] \\
+Fixed Effects &       Yes&             Yes &                  Yes &  &                       Yes    \\ [0.5ex]
+Stepwise &       No&             No &                   No &  &                      Yes    \\ [0.5ex]
+Observations&            9176 &           4825&                  4825   &&                         4834      \\ [0.5ex]
+$R^2$ &                     0.001 &          0.381&                   0.327 &&                      0.321 \\ [0.5ex]
+Rdj-$R^2$&                 0.001&        &                  0.326 &  &                   0.320   \\ [0.5ex]
 \hline
 \bottomrule
 \end{tabular}
 \begin{tablenotes}
   
- \item \footnotesize{Notes. Each column reports results from a regression of dummy variables and other indicators for $\text{NO}_\text{x}$ concentrations. Column (1) uses $\text{NO}_\text{x}$ concentration in parts per billion. Columns (2) through (4) take the log of $\text{NO}_\text{x}$ parts per billion concentrations. Fixed effects include variables that do not vary with time such as farm size and farm acerage. The standard errors reported in Table 5 are robust standard errors. HC3 covariance methods are used in the ols model in python ($cov_type='HC3'$). $***p<.01. **<.05. *p<.10.$}
+ \item \footnotesize{Notes. Each column reports results from a regression of dummy variables and other indicators for $Price$. Column (1),  Column (2), and Column (3) use the price of homes denoted in US dollars while Column (4) uses the log($Price$) as the demendent variable. Fixed effects include attributes to the homes that do not vary with time. Model 2 uses a general linear model while Model 1, 3, and 4 use ordinary least squares. The standard errors reported in square brackets  are robust standard errors. HC3 covariance methods are used in the ols model in python ($cov_type='HC3'$). $***p<.01. **<.05. *p<.10.$}
 
 \end{tablenotes}
 \label{table:5}
