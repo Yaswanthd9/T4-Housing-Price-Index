@@ -8,7 +8,6 @@ import seaborn as sns
 import statsmodels.api as sm 
 from statsmodels.formula.api import glm
 from statsmodels.formula.api import ols
-from statsmodels.formula.api import ols
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.graphics.gofplots import ProbPlot
 print('Done, continue.')

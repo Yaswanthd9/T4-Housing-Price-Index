@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 #%%
 ###################################
-###### Load in the  Datasets ######
+###### Load in the 2 Datasets #####
 ###################################
 df= pd.read_csv('DC_Cleaned_Housing.csv')
 df.head()
