@@ -312,7 +312,17 @@ plt.ylabel("Price")
 plt.savefig('ConditionViolin.png')
 plt.show()
 #%%
-
+#############################
+######## STRUCT VIOLIN #######
+############################# 
+sns.violinplot(x="STRUCT", y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True)
+plt.title("Price vs Structure")
+plt.xlabel("Structure of the home")
+plt.tick_params(axis='x', labelsize= 10, rotation = 20)
+plt.ylabel("Price")
+plt.savefig('StructureViolin.png')
+plt.show()
+#%%
 # Plot for Land area
 # #Violin Plot 
 sns.violinplot(x='LANDAREA', y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True)
