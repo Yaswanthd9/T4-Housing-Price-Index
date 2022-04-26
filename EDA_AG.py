@@ -10,6 +10,7 @@ from statsmodels.formula.api import glm
 from statsmodels.formula.api import ols
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from statsmodels.graphics.gofplots import ProbPlot
+from scipy.stats import skew
 print('Done, continue.')
 #%%
 ###################################
@@ -38,12 +39,13 @@ FinalDC['DistanceDummy'] = FinalDC['distance'].apply(DistanceDummy)
 #############################
 ####### PRICE HISTOGRAM #####
 #############################
-plt.hist(x='PRICE',bins=80, data= FinalDC)
+plt.hist(x='PRICE',bins=80, data= FinalDC, density=True )
 plt.xlabel('Price, 1e7')
 plt.ylabel('Frequency')
 plt.title('Distribution of Home Prices')
 plt.savefig('priceHist.png')
 plt.show()
+
 #%%
 #############################
 ##### LOG PRICE HISTOGRAM ###
@@ -55,6 +57,7 @@ plt.ylabel('Frequency')
 plt.title('Distribution of Home Prices')
 plt.savefig('LogpriceHist.png')
 plt.show()
+
 #%%
 outBig= (8.150000e+05+(1.5*(8.150000e+05-3.650000e+05)))
 outSmall = (3.650000e+05-(1.5*(8.150000e+05-3.650000e+05)))
@@ -247,6 +250,8 @@ plt.xlabel("Number of Half-BathRooms")
 plt.ylabel("Price")
 plt.savefig('hfJoint.png')
 plt.show()
+
+
 # %%
 #PLOTS FOR STORIES
 FinalDC['STORIES'] = FinalDC['STORIES'].round()
