@@ -75,20 +75,46 @@ This paper investigates
 \section*{Theory}
 \section*{Data}
 
-
-
-
-
-
-\subsection*{Calculating House to Metro Distance}
+To estimate the price premium incurred by consumers buying homes within a half mile radius of a metro station, data are obtained for Washington, DC home sales in 2017. Housing sale data are obtained for single family, multi family, and row- houses and synthesized via kaggle. Metro location data are obtained from Open Source DC. \\
+\tab The dataset includes many home fixed effects, including the number of bathrooms, bedrooms, half bathrooms \& floors, the size of the home, the lot acreage, and the type of structure. The price of each home is demarcated in US dollars. Most importantly, each home pairs with a set of latitude and longitude coordinates. The dataset contains 12,399 homes sold in 2017. \\
+\tab The dataset for Metro Locations contains variables indicating the lines running through the station and a pair of latitude and longitude coordinates for all 91 DC Metro stations.\\
+\tab In the modeling, the price of each home is the dependent variable. The parameter of interest is the coefficient on Metro.5, which is a dummy variable indicating whether a house falls within a half mile radius of one of the metro stations. The coefficient on Metro.5 indicates the price differential for a house loathed near a metro station. The other independent variables include the home fixed effects mentioned above. We control for home fixed effects to isolate the effect of living within a half mile radius of the metro station and esure the independent variables are uncorrelated with the error term in the econometric models.\\
+\tab The original dataset contained every home sale in Washington, DC for the years 1980-2019. We first separated the date column (dd-mm-yyyy) into three columns for day, month, and year of the sale. We then used Boolean operators to filter out all the homes sold in 2017.\\
+\tab Performing exploratory data analysis indicated three outliers in the price variable, and those were removed. In the third and fourth econometric model, this paper uses the natural logarithm of home price. \\
+\tab The variable for home structure originally used strings to demarcate the style of home, e.g. single. This paper converts the string names to integer values.\\
+\tab To determine if a given house falls within a half mile radius to a metro station, the distance from each house to the nearest metro station must be calculated. To do so, this paper utilizes the haversine formula and the two pairs of latitude and longitude coordinates for the each house and each metro station. Equation~\ref{eqn:1} illustrates how this paper calculates the distances.
 
 \begin{gather}
-\ d=2r\ arcsin \left(\sqrt{sin^{2} \left( \frac{\phi_{2}-\phi_{1}} {2} \right) +cos(\phi_1)cos(\phi_2)sin^2 \left( \frac{\lambda_{2}-\lambda_{1}} {2} \right)       } \right) \ 
+\ d=2r\ arcsin \left(\sqrt{sin^{2} \left( \frac{\phi_{2}-\phi_{1}} {2} \right) +cos(\phi_1)cos(\phi_2)sin^2 \left( \frac{\lambda_{2}-\lambda_{1}} {2} \right) } \right) \
+\label{eqn:1}
+\end{gather}
+\\
+where $\phi_1$ and $\phi_2$ correspond to latitude 1 and latitude 2, $\lambda_1$ and $\lambda_2$ correspond to longitude 1 and longitude 2, and $r$ is the radius of the Earth.\\
+\tab The latitude and longitude coordinates for each house and each metro station are substituted into the haversine function for $(\phi_1,\ \lambda_1) \ \& \ (\phi_2,\ \lambda_2)$ respectively. The distance from a single house to all 91 metro stations are
+calculated, then the minimum distance is selected and added to the dataframe. \\
+\tab The haversine formula produces 91 distances for each house. Equation~\ref{eqn:2} finds the minimum distance for each house given the list of 91 distances.
+
+\begin{gather}
+\ \min{(distances\ _{1}^{91})} = Distance \ 
+\label{eqn:2}
+\end{gather}
+\\
+Based on the minimum distance found using Equation~\ref{eqn:2}, dummy variables are found using Equation~\ref{eqn:3}.\\
+
+
+\begin{gather}
+\ 
+Metro.5=
+    \begin{cases}
+        1 & \text{if } Distance \leq 0.50\\
+        0 & \text{if } Distance > 0.50
+    \end{cases}
+ \ 
+\label{eqn:3}
 \end{gather}
 
-where $\phi_1$ and $\phi_2$ correspond to latitude 1 and latitude 2, $\lambda_1$ and $\lambda_2$ corresond to longitude 1 and longitude 2, and $r$ is the radius of the Earth.\\
-\tab The latitude and longitude coordinates for each house and each metro station are substituded into the haversine fuction for $(\phi_1,\ \lambda_1) \ \& \  (\phi_2,\ \lambda_2)$ respectively. The distance from a single house to all 91 metro stations are 
-calculated, then the minumum distance is selected and added to the dataframe.
+Now that each house has a dummy variable indicating whether it lies within a half hile radius of a metro station, this paper proceeds with Exploratory Data Analysis. 
+\clearpage
 
 \section*{Exploratory Data Analysis}
 To demonstrate the usefulness of each variable in the model, an exploratory data analysis of the variable was conducted. 
