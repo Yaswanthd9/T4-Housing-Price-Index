@@ -73,6 +73,8 @@ This paper investigates
 
 \section*{Introduction}
 \section*{Theory}
+
+
 \section*{Data}
 
 To estimate the price premium incurred by consumers buying homes within a half mile radius of a metro station, data are obtained for Washington, DC home sales in 2017. Housing sale data are obtained for single family, multi family, and row- houses and synthesized via kaggle. Metro location data are obtained from Open Source DC. \\
@@ -249,46 +251,42 @@ Half&	0.321& 	0.348&0.099& 	-0.105&	0.031&	0.306&	0.290& 	0.3963&	1 \\ [0.5ex]\h
 \label{table:1}
 \end{table}
 
-
-$$price = \beta_0 +\delta_1\ nearMetro + \beta_1\ medianInc + \beta_2\ crimeRate + \beta_3\ bdrms + \beta_4\ stories + \beta_5\ sqft +$$$$ \beta_6\ fullBath + \beta_7\ halfBath + \beta_8\ grade + \beta_9\ landSize + u$$\\\\
-where $nearMetro$ is a dummy variable; 1 if within a .5 mile radius from a metro station, $crimeRate$ is percentage of the crime per 100,000, $stories$ is the number of stories a house has, $sqft$ is the square feet of the home, among other home effects variables. \\
-
-
-$$price = \beta_0 +\delta_1\ metro.5  + u$$
-\bigskip
-\bigskip
-
-$metro.5=1$ if the house is within a 0.50 mile radius, 0 else
-
-
-
-\bigskip
-\bigskip
-\bigskip
-\bigskip
-
-$$\text{log}(price) = \beta_0 +\delta_1\ metro.5  + \beta_1\ stories + \beta_2\ landArea + $$$$\beta_3\ cndtn + \beta_4\ bathroom + \beta_5\ AC + \beta_6\ bedroom + \beta_7\ halfbath + u $$
-
-\bigskip
-\bigskip
-$metro.5=1$ if the house is within a 0.50 mile radius, 0 else
-
-
-
-
-$$price = \beta_0 +\delta_1\ metro.5 + \beta_k\ (house\ fixed\ effects )+ u$$
-\bigskip
-\bigskip
-
-parameter of interest: $\delta_1$\\
-\tab \  $metro.5=1$ if the house is within a 0.50 mile radius, 0 else
-
 \section*{Results}
+This paper utilizes a multiple linear regression approach using ordinary least squares estimators to predict if homes located within a half- mile radius incur a price premium relative to homes outside of the ahlf- mile radius.\\
+\tab This paper estimates four different econometric models, but will only discuss the results of the two consequential models, Model 1 and Model 4. Details about all four models are found in the Econometric Specification Section.\\
+\tab The first prediction framework estimates the price differential for houses inside and outside of the half-mile radius without controlling for the home's fixed effects, denoted by Equation~\ref{eqn:4}.
+\begin{align}
+\ price = \beta_0 +\delta_1\ metro.5  + u \ 
+\label{eqn:4}
+\end{align}
+The reported coefficients on $\hat{\delta_1}$  in Column (1) of Table~\ref{table:2} is 24,776.83 and it is statistically significant. This means that a house falling within a half mile radius of a metro station is associated with a \$24,778 price premium, all else equal.\\
+\tab Notice, however, that the $R^2$ reported at the bottom of Column (1) is 0.001. This means that about 1\% of the sample variation in price can be explained by the distance dummy variable. Therefore, a more sophisiticated model must include home fixed effects.\\
+\tab The second and third prediction models are included to demonstrate the thought process followed by this paper. We estimate a general linear model first (Model 2) to relax the econometric assumptions in attempt to solve multicollinearity issues. Model 3 uses ordinary least squares and robust standard errors to solve heteroskedasticity issues. The variables included in Model 2 and Model 3 can be found in Column (2) and Column (3) of Table~\ref{table:2}. These home fixed effects are chosen rather arbitrarily, and subsequently, result in very strong multicollinearity issues. As a result, Model 4 employs a stepwise selection process to better choose the home fixed effects and therefore reduces multicollinearity issues. \\
+\tab The fourth prediction framework estimates the price differential for houses inside and outside of the half-mile radius, controlling for the home's fixed effects, denoted by Equation~\ref{eqn:5}.
+\begin{align}
+\ \text{log}(price) = \beta_0 +\delta_1\ metro.5  + \beta_1 \ rooms + \beta_2\ rooms^2 + \beta_3\ bathrooms \nonumber \\ + \beta_4\ HalfBath + \beta_5\ bedrooms + \beta_6\ bed^2 + \beta_6\ structure + u \ 
+\label{eqn:5}
+\end{align}
+The quadratic terms on $rooms$ and $bedrooms$ allows for diminishing marginal returns to each of these home attributes. The stepwise selection process and joint F tests for inclusion indicate a stronger $R^2$ when including the quadratic terms as it corrects the model for better functional form. \\
+\tab The reported coefficient, $\hat{\delta_1}$  in Column (4) of Table~\ref{table:2}, is 0.21 and it is statistically significant. This means that a home located within a half-mile of a metro station is associated with a 21\% higher price than homes located outside of the radius. \\
+\tab Furthermore, the coefficients on bedrooms and bathrooms are positive while their corresponding quadratic terms are negative. All four terms are statistically significant. This means that adding a bedroom or bathroom to a house increases its price but only up to a point. If too many bedrooms or bathrooms are added, the price begins to fall. 
+
+
+
+
+
+
+
+
+
+
+
+
 \begin{table}[h!]
 \centering
 \begin{threeparttable}
 
-\caption{Post Treatment Effects on $\text{NO}_\text{x}$}
+\caption{Effects of Metro Proximity on Home Prices}
 \begin{tabular}{lccccc} 
 %\multicolumn{6}{c}{ \textbf{DinD Treatment Effects on NOx}} \\
 \hline\hline\\[0.001ex]
@@ -318,9 +316,9 @@ Single&	&	-77761.28\footnotesize***&	-83945.82\footnotesize***&&	-0.25\footnotes
 &	&	\footnotesize(13528.3)0&	\footnotesize(13562.47)&&	\footnotesize[0.03]\\
 Rooms&	&	&	&&	0.16\footnotesize***\\
 &	&	&	&&	\footnotesize[0.02] \\
-$Rooms^2$&	&	&	&&	-0.01\footnotesize*** \\
+$Rooms^2$&	&	&	&&	-0.011\footnotesize*** \\
 &	&	&	&&	\footnotesize[0.00] \\
-$Bed^2$&	&	&	&&	0.005\footnotesize*** \\
+$Bed^2$&	&	&	&&	-0.005\footnotesize*** \\
 &	&	&&	&	\footnotesize[0.00] \\
 Fixed Effects &       Yes&             Yes &                  Yes &  &                       Yes    \\ [0.5ex]
 Stepwise &       No&             No &                   No &  &                      Yes    \\ [0.5ex]
@@ -335,7 +333,7 @@ Adj-$R^2$&                 0.001&        &                  0.326 &  &          
  \item \footnotesize{Notes. Each column reports results from a regression of dummy variables and other indicators for $Price$. Column (1),  Column (2), and Column (3) use the price of homes denoted in US dollars while Column (4) uses the log($Price$) as the demendent variable. Fixed effects include attributes to the homes that do not vary with time. Model 2 uses a general linear model while Model 1, 3, and 4 use ordinary least squares. The standard errors reported in square brackets  are robust standard errors. HC3 covariance methods are used in the ols model in python ($cov_type='HC3'$). $***p<.01. **<.05. *p<.10.$}
 
 \end{tablenotes}
-\label{table:5}
+\label{table:2}
 \end{threeparttable}
 \end{table}
 \clearpage
