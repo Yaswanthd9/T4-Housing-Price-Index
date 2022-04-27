@@ -148,7 +148,7 @@ FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
 #############################
 ##### STRUCTURE HISTOGRAM ###
 #############################
-plt.hist(x='structure',bins=15, data= FinalDC)
+plt.hist(x='structure',bins=15, data= FinalDC )
 plt.xlabel('Type of Home')
 plt.ylabel('Frequency')
 plt.title('Distribution of Home Type')
@@ -158,6 +158,31 @@ plt.xticks(default_x_ticks, x)
 # plt.axvline(FinalDC.ROOMS.median(), color='red', linestyle='dashed', linewidth=1)
 plt.savefig('structureHist.png')
 plt.show()
+
+#%%
+#############################
+######## STRUCT VIOLIN #######
+############################# 
+sns.violinplot(x="structure", y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True)
+plt.title("Price vs Structure")
+plt.xlabel("Structure of the home")
+plt.xticks(range(5), ['Row Inside', 'Multi', 'Semi-Detached','Row End','Single' ])
+plt.tick_params(axis='x', labelsize= 10)
+plt.ylabel("Price")
+plt.savefig('StructureViolin.png')
+plt.show()
+
+#%%
+# #############################
+# ##### STRUCTURE JOINTPLOT ###
+# #############################
+# sns.jointplot(x="structure", y="newPrice", data=FinalDC, color = 'blue', kind='reg', line_kws={'color':'green'})
+# plt.title("Price vs Structure")
+# plt.xticks(range(5), ['Row Inside', 'Multi', 'Semi-Detached','Row End','Single' ])
+# plt.xlabel("Number of Structure")
+# plt.ylabel("Price")
+# plt.savefig('StructureJoint.png')
+# plt.show()
 #%%
 #############################
 ##### DISTANCE VIOLIN #######
@@ -311,17 +336,7 @@ plt.xlabel("Condition of the home")
 plt.ylabel("Price")
 plt.savefig('ConditionViolin.png')
 plt.show()
-#%%
-#############################
-######## STRUCT VIOLIN #######
-############################# 
-sns.violinplot(x="STRUCT", y="newPrice", data= FinalDC, scale="width", hue = "metro50", split = True)
-plt.title("Price vs Structure")
-plt.xlabel("Structure of the home")
-plt.tick_params(axis='x', labelsize= 10, rotation = 20)
-plt.ylabel("Price")
-plt.savefig('StructureViolin.png')
-plt.show()
+
 #%%
 # Plot for Land area
 # #Violin Plot 
