@@ -148,7 +148,8 @@ FinalDC['structure'] = FinalDC.apply(structure, colname='STRUCT', axis=1)
 #############################
 ##### STRUCTURE HISTOGRAM ###
 #############################
-plt.hist(x='structure',bins=15, data= FinalDC )
+#sns.histplot(data=FinalDC, x='structure', hue='metro50', palette= ("Blue","Orange") )
+plt.hist(x='structure',bins=15, data= FinalDC)
 plt.xlabel('Type of Home')
 plt.ylabel('Frequency')
 plt.title('Distribution of Home Type')
