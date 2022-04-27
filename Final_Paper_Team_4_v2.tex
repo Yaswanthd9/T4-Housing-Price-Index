@@ -74,7 +74,121 @@ This paper investigates
 \section*{Introduction}
 \section*{Theory}
 \section*{Data}
+
+
+
+
+
+
+\subsection*{Calculating House to Metro Distance}
+
+\begin{gather}
+\ d=2r\ arcsin \left(\sqrt{sin^{2} \left( \frac{\phi_{2}-\phi_{1}} {2} \right) +cos(\phi_1)cos(\phi_2)sin^2 \left( \frac{\lambda_{2}-\lambda_{1}} {2} \right)       } \right) \ 
+\end{gather}
+
+where $\phi_1$ and $\phi_2$ correspond to latitude 1 and latitude 2, $\lambda_1$ and $\lambda_2$ corresond to longitude 1 and longitude 2, and $r$ is the radius of the Earth.\\
+\tab The latitude and longitude coordinates for each house and each metro station are substituded into the haversine fuction for $(\phi_1,\ \lambda_1) \ \& \  (\phi_2,\ \lambda_2)$ respectively. The distance from a single house to all 91 metro stations are 
+calculated, then the minumum distance is selected and added to the dataframe.
+
 \section*{Exploratory Data Analysis}
+To demonstrate the usefulness of each variable in the model, an exploratory data analysis of the variable was conducted. 
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{priceHist.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:priceHist}
+\end{figure}
+\\
+First, $price$, the dependent variable in the model was looked into. The histogram for $price$ showed peaks in price to be clustered. The histogram also showed a few outliers in the data that should be removed before conducting further analysis.
+
+\clearpage
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{newPriceHist.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:NewpriceHist}
+\end{figure}
+After removing the necessary outliers, a new variable for price, newPrice, is created. Even though the histogram for newPrice shows that the average price for homes in the DC area is higher than the median price, the new price data is now more symmetrical than before. The peaks in the newPrice histogram show that most homes range between two-hundred and eight-hundred thousand dollars. \\
+\clearpage
+
+\tab This paper theorizes that the price premium decreases as the distance between a home in Washington D.C. and the nearest metro station increases. The histogram below shows the distribution of the homes by their proximity to the nearest metro station.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{distanceHist.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:distanceHist}
+\end{figure}
+As observed in the Distance histogram, median homes are located within a 0.5-mile radius of the nearest metro station. The distribution is skewed to the right, with the distance ranging from zero to over two miles. Given that most homes are clustered within a one-mile radius, a dummy variable is created to see the difference in the price premium for homes within and outside the 0.5-mile radius to conduct further analysis.
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=110mm]{DistanceJoint.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:distanceJoint}
+\end{figure}
+
+The joint plot above shows the scatter plot of price and distance and the distribution of distance on the top, and the distribution of price on the right. The line of best fit in the scatterplot shows a clear downward sloping or negative relationship between the two variables. The downward sloping trend line shows that as the distance increases, the price of the homes decreases. 
+\clearpage
+
+To take a deeper look into the factors that affect home prices, it is important to take fixed effects and features of the homes into account.\\
+\tab First, we looked at the number of bedrooms in the homes and its relationship with price.
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{bedroomHist.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:bedHist}
+\end{figure}
+The histogram shows the median number of bedrooms in the dataset to be 3. The number of bedrooms ranges from one to six, with eight bedrooms being an outlier. 
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{BedViolin.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:bedVio}
+\end{figure}
+When looking at this variable, it was expected that the price of the homes in D.C. would increase as the number of bedrooms increased. On the contrary, the white points in the violin plot show a steady increase in the median price as the number of bedrooms increases to five. At six bedrooms, the median price of homes begins to decline, and the price becomes constant at eight bedrooms. 
+\clearpage
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{BedJoint.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:bedJoint}
+\end{figure}
+The joint plot for bedrooms and price shows the overall upward sloping line of best fit, which indicates a positive relationship between price and the number of bedrooms. It is also observed that the price peaks at around four-hundred thousand dollars in relation to the number of bedrooms. 
+\clearpage
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{ConditionViolin.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:cndVio}
+\end{figure}
+
+
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=130mm]{structureHist.png}
+\end{center}
+\caption{\textbf{.}}
+\label{fig:strHist}
+\end{figure}
+
+\clearpage
+
 \section*{Econometric Specification}
 This paper utilizes a multiple linear regression approach using ordinary least squares estimators to predict if homes located within a half mile radius of a metro station incur a price premium. It is natural for homes to differ in price for several reasons, including size, year built, geographical location, or number of bedrooms. To determine if the metro station proximity is responsible for the differences in price, this paper controls for many home fixed effects mentioned above and in the data section.\\  \\
 \tab This paper estimates four models, the first three utilize the price of a home as the demendent variable, denoted in dollars. The fourth equation estimates the price premium using the log of the home price to account for skew in the home price data. The general specification of the four models take on the functional form of Equation~\ref{eqn:1}.
