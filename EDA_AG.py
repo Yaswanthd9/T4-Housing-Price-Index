@@ -1545,3 +1545,5 @@ plt.show()
 # plt.ylabel("Price")
 # plt.savefig('priceVsLand.png')
 # plt.show()
+#%%
+FinalDC.ROOMS.mean()
