@@ -135,33 +135,33 @@ To demonstrate the usefulness of each variable in the model, an exploratory data
 \begin{center}
 \includegraphics[width=130mm]{priceHist.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{The distribution of home prices in Washington, DC.}}
 \label{fig:priceHist}
 \end{figure}
 \\
-First, $Price$, the dependent variable in the model, was looked into. The histogram for $Price$ showed peaks in price to be clustered. The histogram also showed a few outliers in the data that should be removed before conducting further analysis. 
+First, we examined the dependent variable, $Price$, to learn more about its distributionn. The histogram for $Price$ that the price of homes in Washington, DC skews to the right. The histogram also showed a few outliers in the data that should be removed before conducting further analysis. 
 
 \clearpage
 \begin{figure}[h]
 \begin{center}
+\caption{\textbf{The distribution of home prices in Washington, DC, sans outliers.}}
 \includegraphics[width=130mm]{newPriceHist.png}
 \end{center}
-\caption{\textbf{.}}
 \label{fig:NewpriceHist}
 \end{figure}
-After removing the necessary outliers, a new variable for price, newPrice, is created. Even though the histogram for newPrice shows that the average price for homes in the DC area is higher than the median price, the new price data is now more symmetrical than before. The peaks in the newPrice histogram show that most homes range between two-hundred and eight-hundred thousand dollars. \\
+After removing the observations above $Q_3+(1.5*IQR)$, we create a new variable for price, newPrice. Even though the histogram for newPrice shows that the average price for homes in the DC area is higher than the median price, the new price data is now more normally distributed than before. This is key for meeting the multiple linear regression assumptions. The peaks in the newPrice histogram show that most homes range between two-hundred and eight-hundred thousand dollars. \\
 \clearpage
 
 \tab This paper theorizes that the price premium decreases as the distance between a home in Washington D.C. and the nearest metro station increases. The histogram below shows the distribution of the homes by their proximity to the nearest metro station.
 
 \begin{figure}[h]
 \begin{center}
+\caption{\textbf{The distribution of homes based on their proximity to the nearest metro station}}
 \includegraphics[width=130mm]{distanceHist.png}
 \end{center}
-\caption{\textbf{.}}
 \label{fig:distanceHist}
 \end{figure}
-As observed in the Distance histogram, median homes are located within a 0.5-mile radius of the nearest metro station. The distribution is skewed to the right, with the distance ranging from zero to over two miles. Given that most homes are clustered within a one-mile radius, a dummy variable is created to see the difference in the price premium for homes within and outside the 0.5-mile radius to conduct further analysis.
+As observed in the Distance histogram above, median homes are located within an $\approx$ 0.5-mile radius of the nearest metro station. The distribution is skewed to the right, with the distance ranging from zero to over two miles. Given that most homes are located within a one-mile radius, a dummy variable is created to see the difference in the price premium for homes within and outside the 0.5-mile radius to conduct further analysis.
 \clearpage
 
 \begin{figure}[h]
@@ -172,29 +172,30 @@ As observed in the Distance histogram, median homes are located within a 0.5-mil
 \label{fig:distanceJoint}
 \end{figure}
 
-The joint plot above shows the scatter plot of price and distance and the distribution of distance on the top, and the distribution of price on the right. The line of best fit in the scatterplot shows a clear downward sloping or negative relationship between the two variables. The downward sloping trend line shows that as the distance increases, the price of the homes decreases. 
+The joint plot above shows the scatter plot of price vs distance and the associated distributions of distance on the top and price on the right. The linear model line of best fit in the scatterplot shows a clear downward sloping negative relationship between the two variables. The downward sloping trend line shows that as the distance increases, the price of the homes decreases. 
 \clearpage
 
-To take a deeper look into the factors that affect home prices, it is important to take fixed effects and features of the homes into account.\\
-\tab First, we looked at the number of bedrooms in the homes and its relationship with price.
+To take a deeper look into the factors that affect home prices, it is important to take fixed effects and features of the homes into account.
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=130mm]{bedroomHist.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Distribution of Bedrooms}}
 \label{fig:bedHist}
 \end{figure}
-The histogram shows the median number of bedrooms in the dataset to be 3. The number of bedrooms ranges from one to six, with eight bedrooms being an outlier. 
+\\
+\tab First, we looked at the number of bedrooms in the homes and their impact on price.
+The histogram shows the median number of bedrooms for homes sold in 2017 to be 3. The number of bedrooms ranges from one to six, with eight bedrooms being an outlier.
 \clearpage
 
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=130mm]{BedViolin.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Distribution of price vs bedrooms}}
 \label{fig:bedVio}
 \end{figure}
-When looking at this variable, it was expected that the price of the homes in D.C. would increase as the number of bedrooms increased. On the contrary, the white points in the violin plot show a steady increase in the median price as the number of bedrooms increases to five. At six bedrooms, the median price of homes begins to decline, and the price becomes constant at eight bedrooms. 
+When analyzing the variable bedrooms, it was expected that the price of the homes in D.C. would increase as the number of bedrooms increased. On the contrary, the white points in the violin plot show a steady increase in the median price as the number of bedrooms increases to five. At six bedrooms, the median price of homes begins to decline, and the price becomes constant at eight bedrooms. The distribution of bedrooms seen in Figure~\ref{fig:bedVio} helps this paper decide when to add quadratic terms to encapsulate marginal diminishing returns of adding additional bedrooms.
 \clearpage
 
 
@@ -205,7 +206,7 @@ When looking at this variable, it was expected that the price of the homes in D.
 \caption{\textbf{.}}
 \label{fig:bedJoint}
 \end{figure}
-The joint plot for bedrooms and price shows the overall upward sloping line of best fit, which indicates a positive relationship between price and the number of bedrooms. It is also observed that the price peaks at around four-hundred thousand dollars in relation to the number of bedrooms. 
+The joint plot for bedrooms and price shows the overall upward sloping linear model line of best fit, which indicates a positive relationship between price and the number of bedrooms. It is also observed that the price peaks at around four-hundred thousand dollars in relation to the number of bedrooms. 
 \clearpage
 
 \begin{figure}[h]
@@ -215,7 +216,10 @@ The joint plot for bedrooms and price shows the overall upward sloping line of b
 \caption{\textbf{.}}
 \label{fig:cndVio}
 \end{figure}
+The violin plot shows the home prices by condition for houses within the half-mile radius of the nearest metro station in orange and outside the radius in blue. Overall the violin plot shows that homes within a half-mile radius are typically priced higher regardless of the listed condition. Contrary to expectations, the violin plot shows that the median home prices for homes listed as “Fair” are priced the lowest, and those listed as “Good” have a higher price than those listed as “Very Good.” 
 
+The width of the violin plots also indicates that more “Excellent” homes were sold at a high price. The violin plot ultimately shows that individuals pay higher for a lower condition home if living close to the metro station. 
+\clearpage
 
 
 \begin{figure}[h]
@@ -225,8 +229,8 @@ The joint plot for bedrooms and price shows the overall upward sloping line of b
 \caption{\textbf{.}}
 \label{fig:strHist}
 \end{figure}
-
-
+This research takes into account the price difference between different styles and structures of homes. The histogram shows that most homes in the dataset are categorized as "Row Inside", followed by “Single” and “Multi” being the least frequent. 
+\clearpage
 \begin{figure}[h]
 \begin{center}
 \includegraphics[width=130mm]{structureViolin.png}
@@ -234,7 +238,7 @@ The joint plot for bedrooms and price shows the overall upward sloping line of b
 \caption{\textbf{.}}
 \label{fig:strHist}
 \end{figure}
-
+The violin chart shows that the median price for “Row Inside” homes is the highest. The violin for this structure is wider for homes within a half-mile radius. The width of the “Row End” violin shows that it is the most popular structure among the houses in a half-mile radius. 
 
 \clearpage
 
