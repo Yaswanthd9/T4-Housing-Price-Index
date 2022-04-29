@@ -49,7 +49,7 @@
 Do Homes Located Near a Metro Station Incur a Price Premium? \thanks{{We would like to thank Professor Lo for his help in calculating the haversine distances.}} \\ 
 \Large
 Evidence from Washington, DC}
-\author{Aru Gupta, Dylan Lucko, Yashwant Sai Devisetti \\ Professor Lo\\The George Washington University\\ \text{arugupta17@gwmail.gwu.edu} \\ \text{dylanlucko@gwu.edu} \\ \text{yaswanthsaidevisetti@gmail.com} \\ \text{https://github.com/Yaswanthd9/T4-Housing-Price-Index}}
+\author{Aru Gupta, Dylan Lucko, Yashwant Sai Devisetti \\ Professor Lo\\The George Washington University\\ \text{arugupta17@gwu.edu} \\ \text{dylanlucko@gwu.edu} \\ \text{yaswanthsaidevisetti@gmail.com} \\ \text{https://github.com/Yaswanthd9/T4-Housing-Price-Index}}
 \date{29 April 2022}
 \maketitle
 \begin{abstract}
@@ -154,9 +154,9 @@ As observed in the Distance histogram above, median homes are located within an 
 
 \begin{figure}[h]
 \begin{center}
-\includegraphics[width=110mm]{DistanceJoint.png}
+\includegraphics[width=130mm]{DistanceJoint.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Jointplot of price vs distance to the metro}}
 \label{fig:distanceJoint}
 \end{figure}
 
@@ -191,7 +191,7 @@ When analyzing the variable bedrooms, it was expected that the price of the home
 \begin{center}
 \includegraphics[width=130mm]{BedJoint.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Joint plot of price vs number of bedrooms}}
 \label{fig:bedJoint}
 \end{figure}
 The joint plot for bedrooms and price shows the overall upward sloping linear model line of best fit, which indicates a positive relationship between price and the number of bedrooms. It is also observed that the price peaks at around four-hundred thousand dollars in relation to the number of bedrooms. 
@@ -201,7 +201,7 @@ The joint plot for bedrooms and price shows the overall upward sloping linear mo
 \begin{center}
 \includegraphics[width=130mm]{ConditionViolin.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Price vs. Condition, split by distance}}
 \label{fig:cndVio}
 \end{figure}
 The violin plot shows the home prices by condition for houses within the half-mile radius of the nearest metro station in orange and outside the radius in blue. Overall, the violin plot shows that homes within a half-mile radius are typically priced higher regardless of the listed condition. Contrary to expectations, the violin plot shows that the median home prices for homes listed as “Fair” are priced the lowest, and those listed as “Good” have a higher price than those listed as “Very Good.” 
@@ -214,7 +214,7 @@ The width of the violin plots also indicates that more “Excellent” homes wer
 \begin{center}
 \includegraphics[width=130mm]{structureHist.png}
 \end{center}
-\caption{\textbf{.}}
+\caption{\textbf{Histogram of Structures}}
 \label{fig:strHist}
 \end{figure}
 This research takes into account the price difference between different styles and structures of homes. The histogram shows that most homes in the dataset are categorized as "Row Inside", followed by “Single” and “Multi” being the least frequent. 
@@ -224,24 +224,24 @@ This research takes into account the price difference between different styles a
 \caption{\textbf{Price vs structure, split for distance to metro. Recall 1 means living within a half-mile radius and 0 means living outside a half-mile radius. }}
 \includegraphics[width=130mm]{structureViolin.png}
 \end{center}
-\label{fig:strHist}
+\label{fig:strVio}
 \end{figure}
 The violin chart shows that the median price for “Row Inside” homes is the highest. The violin for this structure is wider for homes within a half-mile radius. The width of the “Row End” violin shows that it is the most popular structure among the houses in a half-mile radius.\\
-\tab Figure~\ref{fig:strHist} illustrates that the individuals living in different styled houses demand metro access differently. As seen above, individuals living within Row Inside, Multi Family, and Row End incur a higher price for living within a half-mile to a metro station, while those living in a Single or Semi Detached pay less.
+\tab Figure 10 illustrates that the individuals living in different styled houses demand metro access differently. As seen above, individuals living within Row Inside, Multi Family, and Row End incur a higher price for living within a half-mile to a metro station, while those living in a Single or Semi Detached pay less.
 
 \clearpage
 
 \section*{Econometric Specification}
-This paper utilizes a multiple linear regression approach using ordinary least squares estimators to predict if homes located within a half mile radius of a metro station incur a price premium. It is natural for homes to differ in price for several reasons, including size, year built, geographical location, or number of bedrooms. To determine if the metro station proximity is responsible for the differences in price, this paper controls for many home fixed effects mentioned above and in the data section.\\ \\
+This paper utilizes a multiple linear regression approach using ordinary least squares estimators to predict if homes located within a half mile radius of a metro station incur a price premium. It is natural for homes to differ in price for several reasons, including size, year built, geographical location, or number of bedrooms. To determine if the metro station proximity is responsible for the differences in price, this paper controls for many home fixed effects mentioned above and in the data section.\\
 \tab This paper estimates four models, the first three utilize the price of a home as the dependent variable, denoted in dollars. The fourth equation estimates the price premium using the log of the home price to account for skew in the home price data. The general specification of the four models take on the functional form of Equation~\ref{eqn:1}.
 \begin{align}
 \ price = \beta_0 +\delta_1\ metro.5 + \beta_k\ (house\ fixed\ effects )+ u \ 
 \label{eqn:1}
 \end{align}
-where $\delta_1$ is the parameter of interest and denotes the price differential for a house located within a half mile radius and a house located outside the radius. $metro.5$ is a dummy variable denoting whether a house falls within the radius: $metro.5$=1 if the house lies within the half mile radius and $metro.5$=0 if else.\\ \\
-\tab The term house fixed effects encompass the home attributes that do not change on average, including the number of bathrooms \& half-bathrooms, the lot size, the number rooms, the number of kitchens, and the type of structure.\\ \\
-\tab In Model 4, this paper performs a stepwise selection process to determine which of the nine home fixed effects should be included in the final model. The stepwise selection independently estimates $price$ as a function of the nine home fixed effects and the $metro.5$ variable for a total of ten regressions. The term with the highest $R^2$ is added to the model, we call this $variable1$. Next, nine regressions are run, each with $variable1$ and the other eight variables; the term with the highest $R^2$ is added, we call this $variable2$. This process is repeated, adding the variable that results in the highest $R^2$ and removing variables that are not statistically significant. Model 4, estimates $\text{(log)}price$ as a function of the variables chosen by this method. \\ \\
-\tab We expect the sign on $metro.5$ to be positive and moderately large as this paper hypothesizes that homes located within the half mile radius will be more expensive. We also expect the signs on $bedrooms$, $bathrooms$, $size$, $landarea$ to all be positive, indicating a higher price given more of these home attributes. We expect some of the structures to have a positive sign and others to have a negative sign, based on the style and quality of the structure. The results of the four regression models can be found in the next section.\\ \\
+where $\delta_1$ is the parameter of interest and denotes the price differential for a house located within a half mile radius and a house located outside the radius. $metro.5$ is a dummy variable denoting whether a house falls within the radius: $metro.5$=1 if the house lies within the half mile radius and $metro.5$=0 if else.\\
+\tab The term house fixed effects encompass the home attributes that do not change on average, including the number of bathrooms \& half-bathrooms, the lot size, the number rooms, the number of kitchens, and the type of structure.\\
+\tab In Model 4, this paper performs a stepwise selection process to determine which of the nine home fixed effects should be included in the final model. The stepwise selection independently estimates $price$ as a function of the nine home fixed effects and the $metro.5$ variable for a total of ten regressions. The term with the highest $R^2$ is added to the model, we call this $variable1$. Next, nine regressions are run, each with $variable1$ and the other eight variables; the term with the highest $R^2$ is added, we call this $variable2$. This process is repeated, adding the variable that results in the highest $R^2$ and removing variables that are not statistically significant. Model 4, estimates $\text{(log)}price$ as a function of the variables chosen by this method. \\
+\tab We expect the sign on $metro.5$ to be positive and moderately large as this paper hypothesizes that homes located within the half mile radius will be more expensive. We also expect the signs on $bedrooms$, $bathrooms$, $size$, $landarea$ to all be positive, indicating a higher price given more of these home attributes. We expect some of the structures to have a positive sign and others to have a negative sign, based on the style and quality of the structure. The results of the four regression models can be found in the next section.\\
 \tab To eliminate any multicollinearity issues, this paper examines a correlation matrix to identify independent variables that correlate with one another. Table~\ref{} illustrates the correlation matrix, with high values denoted in red.
 \begin{table}[h!]
 \centering
@@ -264,7 +264,6 @@ Half& 0.321& 0.348&0.099& -0.105& 0.031& 0.306& 0.290& 0.3963& 1 \\ [0.5ex]\hlin
 \caption{\footnotesize Values above 0.50 are highlighted in red. Note that the correlation between log(price) and Price are not considered as they do not appear in the same model.}
 \label{table:1}
 \end{table}
-
 \section*{Results}
 This paper utilizes a multiple linear regression approach using ordinary least squares estimators to predict if homes located within a half- mile radius incur a price premium relative to homes outside of the half- mile radius.\\
 \tab This paper estimates four different econometric models but will only discuss the results of the two consequential models, Model 1 and Model 4. Details about all four models are found in the Econometric Specification Section.\\
@@ -275,7 +274,7 @@ This paper utilizes a multiple linear regression approach using ordinary least s
 \end{align}
 The reported coefficients on $\hat{\delta_1}$ in Column (1) of Table~\ref{table:2} is 24,776.83 and it is statistically significant. This means that a house falling within a half mile radius of a metro station is associated with a \$24,778 price premium, all else equal.\\
 \tab Notice, however, that the $R^2$ reported at the bottom of Column (1) is 0.001. This means that about 1\% of the sample variation in price can be explained by the distance dummy variable. Therefore, a more sophisticated model must include home fixed effects.\\
-\tab The second and third prediction models are included to demonstrate the thought process followed by this paper. We estimate a general linear model first (Model 2) to relax the econometric assumptions in attempt to solve multicollinearity issues. Model 3 uses ordinary least squares and robust standard errors to solve heteroskedasticity issues. The variables included in Model 2 and Model 3 can be found in Column (2) and Column (3) of Table~\ref{table:2}. These home fixed effects are chosen rather arbitrarily, and subsequently, result in very strong multicollinearity issues. As a result, Model 4 employs a stepwise selection process to better choose the home fixed effects and therefore reduces multicollinearity issues. \\
+\tab The second and third prediction models are included to demonstrate the thought process followed by this paper. We estimate a general linear model first (Model 2) to relax the econometric assumptions in attempt to solve multicollinearity issues. Model 3 uses ordinary least squares and robust standard errors to solve heteroskedasticity issues \footnote{Please see Figures 13 and 14 in Appendix B}. The variables included in Model 2 and Model 3 can be found in Column (2) and Column (3) of Table~\ref{table:2}. These home fixed effects are chosen rather arbitrarily, and subsequently, result in very strong multicollinearity issues. As a result, Model 4 employs a stepwise selection process to better choose the home fixed effects and therefore reduces multicollinearity issues. \\
 \tab The fourth prediction framework estimates the price differential for houses inside and outside of the half-mile radius, controlling for the home's fixed effects, denoted by Equation~\ref{eqn:5}.
 \begin{align}
 \ \text{log}(price) = \beta_0 +\delta_1\ metro.5 + \beta_1 \ rooms + \beta_2\ rooms^2 + \beta_3\ bathrooms \nonumber \\ + \beta_4\ HalfBath + \beta_5\ bedrooms + \beta_6\ bed^2 + \beta_6\ structure + u \ 
@@ -358,7 +357,7 @@ Based on the fact that the $R^2$ of Model 4- which includes the home's fixed eff
 \tab To further this research, it would be beneficial to incorporate the difference in the price premium in different wards of the district. This will help gain a deeper understanding of the different neighborhoods in D.C. Studying the proximity to different metro lines will also provide a greater understanding of the house price premium in different neighborhoods. 
 
 \section*{Concluding Remarks}
-Through our analysis, we can conclude that homebuyers within the half-mile radius of the nearest metro station pay a price premium of 21\% which is greater than for homes beyond the half-mile radius by 21\%. The exploratory data analysis of the fixed effects and the data model including the variables for fixed effects and their quadratic forms show that homebuyers paid a higher price when living within a half-mile radius regardless of the number of bathrooms and bedrooms. We also found that homebuyers paid a higher premium for a lower condition home if the home was in close proximity to a metro station. 
+Through our analysis, we can conclude that homebuyers within the half-mile radius of the nearest metro station pay a price premium of about 21\%. The exploratory data analysis of the fixed effects show that most houses sold in 2017 fall within 0-2.5 miles of a metro station and that price increased when adding more bedrooms and bathrooms. We ran four different models to capture the effect of living within walking distance to a metro station, the best being the fourth model. Model 4 makes use of a stepwise selection process and regresses home price on the distance dummy variable and home fixed effects. The results of Model 4 indicate that homebuyers pay more to live within a half-mile radius.  We also find that the number of bedrooms, rooms, and bathrooms have diminishing marginal returns. Lastly, we found that homebuyers paid a higher premium for a lower condition home if the home was in close proximity to a metro station. So if you are a young adult looking to move to the District, caveat emptor, let the buyer beware. 
 \clearpage
 
 \section*{Appendix A}
@@ -396,8 +395,8 @@ clip = false,
 \node [above] at (current axis.above origin) {Price, $P$};
 \node [right] at (5.3, 5.3) {$E$};
 %\node [right] at (7, 3.67) {$E^\prime$};
-\node [right] at (10, 1) {$D_{EV}$};
-\node [above] at (7, 8) {$S_{EV}$};
+\node [right] at (10, 1) {$D_{h}$};
+\node [above] at (7, 8) {$S_{h}$};
 %\node [right] at (9, 9) {$S^\prime$};
 \node [left] at (0, 5.67) {$P_E$};
 %\node [left] at (0, 3.67) {$P^\prime$};
@@ -453,9 +452,9 @@ clip = false,
 \node [above] at (current axis.above origin) {Price, $P$};
 \node [right] at (5.3, 5.3) {$E$};
 %\node [right] at (7, 3.67) {$E^\prime$};
-\node [right] at (10, 1) {$D_{EV}$};
-\node [right] at (10, 4) {$D_{EV^\prime}$};
-\node [above] at (6.5, 8) {$S_{EV}$};
+\node [right] at (10, 1) {$D_{h}$};
+\node [right] at (10, 4) {$D_{h^\prime}$};
+\node [above] at (6.5, 8) {$S_{h}$};
 %\node [right] at (9, 9) {$S^\prime$};
 \node [left] at (0, 5.62) {$P_E$};
 \node [left] at (0, 7.1) {$P^\prime$};
@@ -498,6 +497,7 @@ Increased demand for housing shifts the demand curve to the right, increasing th
 \emph{Figure 14}\\
 \end{center}
 \end{multicols}
+The analysis of residuals indicates strong heteroskedasticity.
 \clearpage
 
 
