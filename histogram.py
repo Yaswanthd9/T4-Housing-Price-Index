@@ -186,3 +186,10 @@ plt.xticks(default_x_ticks, x)
 plt.savefig('structureHist.png')
 plt.show()
 # %%
+sns.regplot(x="distance", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Distance")
+plt.xlabel("Distance to the metro")
+plt.ylabel("Price")
+plt.savefig('DistanceRegplot.png')
+plt.show()
+# %%
