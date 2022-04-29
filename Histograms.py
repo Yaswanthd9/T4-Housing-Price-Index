@@ -167,3 +167,10 @@ print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 #print("Recall:",metrics.recall_score(y_test, y_pred))
 
 # %%
+sns.regplot(x="BEDRM", y="Price", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bed Rooms")
+plt.xlabel("Number of Bed Rooms")
+plt.ylabel("Price")
+plt.savefig('BedRegplot.png')
+plt.show()
+# %%
