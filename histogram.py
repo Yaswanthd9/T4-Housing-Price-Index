@@ -175,3 +175,14 @@ plt.savefig('roomsHist.png')
 plt.show()
 
 # %%
+plt.hist(x='structure',bins=15, data= FinalDC)
+plt.xlabel('Type of Home')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Type')
+x= ['','Row Inside', 'Multi', 'Semi-Det.', 'Row-End', 'Single']
+default_x_ticks = range(len(x))
+plt.xticks(default_x_ticks, x)
+# plt.axvline(FinalDC.ROOMS.median(), color='red', linestyle='dashed', linewidth=1)
+plt.savefig('structureHist.png')
+plt.show()
+# %%
