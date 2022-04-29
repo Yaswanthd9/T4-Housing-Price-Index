@@ -148,3 +148,11 @@ plt.ylabel("Price")
 plt.savefig('RoomRegplot.png')
 plt.show()
 # %%
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+plt.hist(x='log_price',bins=80, data= FinalDC)
+plt.xlabel('Price, 1e7')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.savefig('LogpriceHist.png')
+plt.show()
+# %%
