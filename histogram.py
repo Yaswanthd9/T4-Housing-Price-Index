@@ -139,3 +139,12 @@ clf = clf.fit(X_train,y_train)
 y_pred = clf.predict(X_test)
 print("Accuracy:",metrics.accuracy_score(y_test, y_pred))
 # %%
+FinalDC = pd.read_csv('FinalDC.csv')
+FinalDC.head()
+sns.regplot(x="HF_BATHRM", y="PRICE", data=FinalDC, scatter_kws={"color": "blue"}, line_kws={"color": "red"})
+plt.title("Price vs Bath Rooms")
+plt.xlabel("Number of Bath Rooms")
+plt.ylabel("Price")
+plt.savefig('RoomRegplot.png')
+plt.show()
+# %%
