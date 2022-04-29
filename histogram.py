@@ -156,3 +156,13 @@ plt.title('Distribution of Home Prices')
 plt.savefig('LogpriceHist.png')
 plt.show()
 # %%
+FinalDC['log_price'] = np.log2(FinalDC['PRICE'])
+plt.hist(x='log_price',bins=80, data= FinalDC)
+plt.xlabel('log Price')
+plt.ylabel('Frequency')
+plt.title('Distribution of Home Prices')
+plt.axvline(FinalDC.log_price.median(), color='red', linestyle='dashed', linewidth=1)
+plt.axvline(FinalDC.log_price.mean(), color='black', linestyle='dashed', linewidth=1)
+plt.savefig('LogPriceHist.png')
+plt.show()
+# %%
