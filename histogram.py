@@ -166,3 +166,12 @@ plt.axvline(FinalDC.log_price.mean(), color='black', linestyle='dashed', linewid
 plt.savefig('LogPriceHist.png')
 plt.show()
 # %%
+plt.hist(x='ROOMS', data= FinalDC)
+plt.xlabel('Number of Rooms')
+plt.ylabel('Frequency')
+plt.title('Distribution of Rooms')
+plt.axvline(FinalDC.ROOMS.mean(), color='white', linestyle='dotted', linewidth=1)
+plt.savefig('roomsHist.png')
+plt.show()
+
+# %%
